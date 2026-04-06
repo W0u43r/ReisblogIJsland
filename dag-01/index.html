@@ -344,9 +344,44 @@
   }
 
   /* 🔥 FIX: Day navigation (dit was je probleem) */
-  .day-navigation { 
-    grid-template-columns: 1fr; 
+  /* DAY NAVIGATION */
+.day-navigation {
+  border-top: 1px solid rgba(168,216,234,0.08);
+  display: grid; 
+  grid-template-columns: 1fr 1fr; /* links en rechts */
+}
+
+.day-nav-item {
+  padding: 1.2rem 2rem;          /* compacter */
+  text-decoration: none; color: inherit;
+  transition: background 0.3s;
+  display: flex; flex-direction: column;
+  gap: 0.25rem;                 /* kleinere afstand tussen lijnen */
+}
+
+.day-nav-item.prev { text-align: left; }
+.day-nav-item.next { text-align: right; }
+
+.day-nav-title { font-size: 1rem; }
+.day-nav-direction { font-size: 0.6rem; }
+
+/* MOBIEL */
+@media (max-width: 768px) {
+  .day-navigation {
+    grid-template-columns: 1fr 1fr;  /* Blijf 2 kolommen */
   }
+
+  .day-nav-item {
+    padding: 0.8rem 1rem;
+    gap: 0.2rem;
+  }
+
+  .day-nav-title { font-size: 0.9rem; }
+  .day-nav-direction { font-size: 0.55rem; }
+
+  .day-nav-item.prev { text-align: left; }
+  .day-nav-item.next { text-align: right; }
+}
 
   .day-nav-item {
     padding: 0.8rem 1rem;   /* VEEL kleiner */
