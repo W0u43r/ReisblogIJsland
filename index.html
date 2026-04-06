@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ============================================================
-  AANPASSEN: Paginatitel (verschijnt in browsertab)
-  ============================================================ -->
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❶ — Paginatitel (verschijnt in de browsertab)           ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->
 <title>IJsland — Een reis van twee weken door ongerepte vulkanische landschappen</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +16,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 
 <style>
+  /* ── Kleurenpalet — laat dit staan ── */
   :root {
     --ice: #a8d8ea;
     --aurora: #3ddc97;
@@ -26,77 +29,28 @@
   html { scroll-behavior: smooth; }
   body { background:var(--deep); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
 
-  /* NAV */
   nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.25rem 3rem; background:linear-gradient(to bottom,rgba(10,15,30,0.95),transparent); backdrop-filter:blur(2px); }
   .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:0.15em; color:var(--ice); text-decoration:none; text-transform:uppercase; }
   .nav-links { display:flex; gap:2rem; list-style:none; }
   .nav-links a { color:var(--muted); text-decoration:none; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; transition:color 0.3s; }
   .nav-links a:hover { color:var(--ice); }
-
-  /* HERO */
-  /* HERO */
-.hero { 
-  position:relative; 
-  height:100vh; 
-  display:flex; 
-  flex-direction:column; 
-  justify-content:flex-end; 
-  padding:6rem 3rem; 
-  overflow:hidden; 
-}
-.hero-bg { 
-  position:absolute; 
-  inset:0; 
-  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(61,220,151,0.08) 0%,transparent 60%),linear-gradient(180deg,#060a14 0%,#0a0f1e 40%,#0f1825 100%); 
-}
-.aurora-band { 
-  position:absolute; 
-  top:0; left:0; right:0; 
-  height:45%; 
-  background:linear-gradient(180deg,rgba(61,220,151,0) 0%,rgba(61,220,151,0.04) 30%,rgba(168,216,234,0.06) 60%,transparent 100%); 
-  animation:aurora-shift 8s ease-in-out infinite alternate; 
-}
-@keyframes aurora-shift { 
-  0%{opacity:0.6;transform:translateX(-3%) skewX(-1deg)} 
-  100%{opacity:1;transform:translateX(3%) skewX(1deg)} 
-}
-.stars { 
-  position:absolute; inset:0; 
-  background-image:radial-gradient(1px 1px at 15% 25%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(1px 1px at 35% 10%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 55% 35%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1px 1px at 75% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 65% 22%,rgba(255,255,255,0.7) 0%,transparent 100%),radial-gradient(1px 1px at 45% 55%,rgba(168,216,234,0.5) 0%,transparent 100%); 
-}
-.hero-tag { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem; }
-.hero-tag::before { content:''; display:block; width:2rem; height:1px; background:var(--aurora); }
-
-/* Aangepaste hero-title */
-.hero-title { 
-  font-family:'Cormorant Garamond',serif; 
-  font-size:clamp(2.5rem,6vw,5.5rem); 
-  font-weight:300; 
-  line-height:1.1; 
-  margin-bottom:2rem; 
-  max-width:100%;           /* volledig breedte gebruiken */
-  overflow-wrap:break-word; /* voorkomt afkappen */
-  word-break:break-word;    /* lange woorden netjes breken */
-}
-.hero-title em { font-style:italic; color:var(--ice); }
-.hero-sub { color:var(--muted); font-size:1rem; max-width:40ch; line-height:1.7; margin-bottom:3rem; }
-.hero-cta { display:inline-flex; align-items:center; gap:0.75rem; color:var(--text); text-decoration:none; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(168,216,234,0.3); padding:0.9rem 2rem; transition:all 0.3s; }
-.hero-cta:hover { border-color:var(--ice); color:var(--ice); background:rgba(168,216,234,0.05); }
-.hero-cta-arrow { transition:transform 0.3s; }
-.hero-cta:hover .hero-cta-arrow { transform:translateX(4px); }
-.hero-scroll-hint { position:absolute; bottom:2rem; right:3rem; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); writing-mode:vertical-rl; display:flex; align-items:center; gap:0.75rem; animation:scroll-hint 2s ease-in-out infinite; }
-.hero-scroll-hint::after { content:''; display:block; width:1px; height:3rem; background:linear-gradient(to bottom,var(--muted),transparent); }
-@keyframes scroll-hint { 0%,100%{opacity:0.4} 50%{opacity:1} }
-
-/* ==================== MEDIA QUERY ==================== */
-@media (max-width:768px) {
-  .hero { padding:5rem 1.5rem 3rem; }
-  .hero-title { 
-    font-size:clamp(2rem,6vw,3.5rem);  /* iets kleiner op tablet/mobiel */
-    max-width:95%;                     /* bijna volledige breedte */
-  }
-}
-  /* COUNTDOWN */
+  .hero { position:relative; height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:6rem 3rem; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(61,220,151,0.08) 0%,transparent 60%),linear-gradient(180deg,#060a14 0%,#0a0f1e 40%,#0f1825 100%); }
+  .aurora-band { position:absolute; top:0; left:0; right:0; height:45%; background:linear-gradient(180deg,rgba(61,220,151,0) 0%,rgba(61,220,151,0.04) 30%,rgba(168,216,234,0.06) 60%,transparent 100%); animation:aurora-shift 8s ease-in-out infinite alternate; }
+  @keyframes aurora-shift { 0%{opacity:0.6;transform:translateX(-3%) skewX(-1deg)} 100%{opacity:1;transform:translateX(3%) skewX(1deg)} }
+  .stars { position:absolute; inset:0; background-image:radial-gradient(1px 1px at 15% 25%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(1px 1px at 35% 10%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 55% 35%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1px 1px at 75% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 65% 22%,rgba(255,255,255,0.7) 0%,transparent 100%),radial-gradient(1px 1px at 45% 55%,rgba(168,216,234,0.5) 0%,transparent 100%); }
+  .hero-tag { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem; }
+  .hero-tag::before { content:''; display:block; width:2rem; height:1px; background:var(--aurora); }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,8vw,7rem); font-weight:300; line-height:0.95; margin-bottom:2rem; max-width:12ch; }
+  .hero-title em { font-style:italic; color:var(--ice); }
+  .hero-sub { color:var(--muted); font-size:1rem; max-width:40ch; line-height:1.7; margin-bottom:3rem; }
+  .hero-cta { display:inline-flex; align-items:center; gap:0.75rem; color:var(--text); text-decoration:none; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(168,216,234,0.3); padding:0.9rem 2rem; transition:all 0.3s; }
+  .hero-cta:hover { border-color:var(--ice); color:var(--ice); background:rgba(168,216,234,0.05); }
+  .hero-cta-arrow { transition:transform 0.3s; }
+  .hero-cta:hover .hero-cta-arrow { transform:translateX(4px); }
+  .hero-scroll-hint { position:absolute; bottom:2rem; right:3rem; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); writing-mode:vertical-rl; display:flex; align-items:center; gap:0.75rem; animation:scroll-hint 2s ease-in-out infinite; }
+  .hero-scroll-hint::after { content:''; display:block; width:1px; height:3rem; background:linear-gradient(to bottom,var(--muted),transparent); }
+  @keyframes scroll-hint { 0%,100%{opacity:0.4} 50%{opacity:1} }
   .countdown-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); text-align:center; }
   .countdown-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:2rem; }
   .countdown-grid { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; }
@@ -104,8 +58,6 @@
   .countdown-number { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,7vw,5rem); font-weight:300; color:var(--ice); line-height:1; display:block; }
   .countdown-unit-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:0.5rem; display:block; }
   .status-message { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--ice); }
-
-  /* DAYS */
   .days-section { padding:5rem 3rem; }
   .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:3rem; border-bottom:1px solid rgba(168,216,234,0.08); padding-bottom:1.5rem; }
   .section-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; }
@@ -125,8 +77,6 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .day-card-placeholder { background:var(--surface); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.75rem; aspect-ratio:4/3; color:var(--muted); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; border:1px dashed rgba(168,216,234,0.08); }
   .day-card-placeholder .day-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:rgba(168,216,234,0.12); font-weight:300; }
-
-  /* MAP */
   .map-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); }
   #map { height:520px; width:100%; border:1px solid rgba(168,216,234,0.12); margin-top:2.5rem; }
   .leaflet-tile { filter:brightness(0.58) saturate(0.65) hue-rotate(175deg); }
@@ -137,8 +87,6 @@
   .leaflet-popup-tip { background:var(--surface)!important; }
   .popup-dag { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--aurora); margin-bottom:0.25rem; }
   .popup-naam { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:300; color:var(--text); }
-
-  /* ABOUT */
   .about-outer { border-top:1px solid rgba(168,216,234,0.08); }
   .about-section { padding:5rem 3rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; max-width:1100px; margin:0 auto; }
   .about-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; }
@@ -147,12 +95,9 @@
   .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
   .about-stat-number { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--ice); line-height:1; }
   .about-stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.25rem; }
-
-  /* FOOTER */
   footer { padding:3rem; border-top:1px solid rgba(168,216,234,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
   .footer-text { font-size:0.8rem; color:var(--muted); }
   .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1rem; letter-spacing:0.15em; color:var(--ice); }
-
   @media (max-width:768px) {
     nav { padding:1rem 1.5rem; }
     .nav-links { display:none; }
@@ -168,7 +113,11 @@
 <body>
 
 <nav>
-  <!-- AANPASSEN: naam in de navigatiebalk -->
+  <!--
+  ╔══════════════════════════════════════════════════════════════════════╗
+  ║  AANPASSEN ❷ — Naam in de navigatiebalk                            ║
+  ╚══════════════════════════════════════════════════════════════════════╝
+  -->
   <a href="index.html" class="nav-logo">IJsland 2026</a>
   <ul class="nav-links">
     <li><a href="#dagen">Dagen</a></li>
@@ -177,10 +126,17 @@
   </ul>
 </nav>
 
-<!-- ══════════════════════════════════════════════════════════════
-  HERO — openingssectie
-  Aanpassen: hero-tag · hero-title · hero-sub · knoptekst
-══════════════════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❸ — Hero: openingsteksten                               ║
+║                                                                     ║
+║  · hero-tag   → reisperiode bovenaan (bijv. "April / Mei")          ║
+║  · hero-title → grote hoofdtitel; <em> maakt woorden cursief blauw ║
+║  · hero-sub   → korte beschrijving eronder                          ║
+║  · hero-cta   → tekst op de knop                                    ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="aurora-band"></div>
@@ -188,7 +144,7 @@
   <div class="hero-scroll-hint">Scroll</div>
   <div style="position:relative;">
     <p class="hero-tag">April / Mei</p>
-    <h1 class="hero-title">Een Reis van twee weken door ongerepte <em>vulkanische</em> landschappen</h1>     
+    <h1 class="hero-title">Een Reis van twee weken door ongerepte <em>vulkanische</em> landschappen</h1>
     <p class="hero-sub">Dertien dagen door geisers, gletsjers en donkere lavawoestijnen. Volg onze reis dag voor dag.</p>
     <a href="#dagen" class="hero-cta">
       Bekijk de dagboeken <span class="hero-cta-arrow">→</span>
@@ -196,9 +152,8 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-  COUNTDOWN — loopt automatisch via JavaScript hieronder
-══════════════════════════════════════════════════════════════ -->
+
+<!-- Countdown loopt automatisch via de instellingen in het script onderaan -->
 <section class="countdown-section" id="countdown-section">
   <p class="countdown-label" id="cd-label">Vertrek over</p>
   <div class="countdown-grid" id="cd-grid">
@@ -209,13 +164,31 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-  DAGBOEKEN
-  - Gepubliceerde dagen: voeg een <a class="day-card"> toe
-  - De rest verschijnt automatisch als grijze placeholder
-  - MOCK DATA: dag 1 en 2 zijn testdata — verwijder of vervang
-    ze als je echte dagpagina's hebt
-══════════════════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❹ — Dagboeken: elke keer als je een nieuwe dag plaatst  ║
+║                                                                     ║
+║  STAP 1  Kopieer het blok hieronder ("NIEUW DAG-SJABLOON") en       ║
+║          plak het als laatste <a class="day-card"> voor de          ║
+║          sluitende </div> van days-grid.                            ║
+║          Vul dan in:                                                ║
+║            href   → pad naar de nieuwe dagpagina                   ║
+║            src    → URL of pad naar je foto                        ║
+║            alt    → korte fotobeschrijving                         ║
+║            nummer → bijv. "Dag 03 — 22 April"                      ║
+║            titel  → locatienaam                                     ║
+║            status → gebruik status-live voor de nieuwste dag,       ║
+║                     en verander de vorige dag naar status-done      ║
+║                                                                     ║
+║  STAP 2  Verwijder diezelfde dag uit PLACEHOLDERS in het script.    ║
+║                                                                     ║
+║  STAP 3  Verhoog PUBLISHED in het script met 1.                     ║
+║                                                                     ║
+║  STAP 4  Voeg de locatie toe aan VISITED_PLACES in het script.      ║
+║          Zet de vorige isLive op false, de nieuwe op true.         ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
 <section class="days-section" id="dagen">
   <div class="section-header">
     <h2 class="section-title">Dagboeken</h2>
@@ -223,7 +196,7 @@
   </div>
   <div class="days-grid" id="days-grid">
 
-    <!-- MOCK DAG 1 — vervang foto-URL en tekst door echte content -->
+    <!-- DAG 01 — gepubliceerd ──────────────────────────────────────── -->
     <a href="dag-01/index.html" class="day-card">
       <img class="day-card-img"
         src="https://images.unsplash.com/photo-1529963183134-61a90db47eaf?w=800&q=80"
@@ -232,19 +205,60 @@
       <div class="day-card-content">
         <p class="day-card-number">Dag 01 — 20 April</p>
         <h3 class="day-card-title">Aankomst in Reykjavik</h3>
-        <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
+        <p class="day-card-meta">
+          <span class="day-card-status status-done"></span>Gepubliceerd
+        </p>
       </div>
     </a>
 
+    <!-- DAG 02 — actieve dag (groene pulserende stip) ──────────────── -->
+    <a href="dag-02/index.html" class="day-card">
+      <img class="day-card-img"
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80"
+        alt="IJslandse natuur bij Úthlid" loading="lazy">
+      <div class="day-card-overlay"></div>
+      <div class="day-card-content">
+        <p class="day-card-number">Dag 02 — 21 April</p>
+        <h3 class="day-card-title">Úthlid</h3>
+        <p class="day-card-meta">
+          <span class="day-card-status status-live"></span>Nu live
+        </p>
+      </div>
+    </a>
 
-    <!-- Dag 3–13: automatisch placeholder via JavaScript -->
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    NIEUW DAG-SJABLOON — kopieer dit blok voor elke nieuwe dag
+    ════════════════════════════════════════════════════════════════════
+
+    <a href="dag-03/index.html" class="day-card">
+      <img class="day-card-img"
+        src="JOUW-FOTO-URL-OF-PAD.jpg"
+        alt="Korte beschrijving van de foto" loading="lazy">
+      <div class="day-card-overlay"></div>
+      <div class="day-card-content">
+        <p class="day-card-number">Dag 03 — 22 April</p>
+        <h3 class="day-card-title">Hvolsvöllur</h3>
+        <p class="day-card-meta">
+          <span class="day-card-status status-live"></span>Nu live
+        </p>
+      </div>
+    </a>
+
+    Vergeet daarna niet (zie de instructies boven dit blok):
+      · Verander dag 02 hierboven van status-live → status-done
+      · Verwijder dag 03 uit PLACEHOLDERS in het script
+      · Zet PUBLISHED op 3
+      · Voeg dag 03 toe aan VISITED_PLACES in het script
+    ════════════════════════════════════════════════════════════════════
+    -->
+
+    <!-- Dag 3–13: verschijnen automatisch als grijze placeholder via het script -->
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-  KAART — toont alleen bezochte plaatsen
-  Aanpassen: zie VISITED_PLACES in het JavaScript hieronder
-══════════════════════════════════════════════════════════════ -->
+
+<!-- Kaart — locaties worden ingesteld via VISITED_PLACES in het script -->
 <section class="map-section" id="route">
   <div class="section-header">
     <h2 class="section-title">Waar we zijn geweest</h2>
@@ -253,14 +267,16 @@
   <div id="map"></div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-  OVER ONS — aanpassen: namen, verhaal, statistieken
-══════════════════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❺ — Over ons: namen, verhaal en statistieken            ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
 <section class="about-outer" id="over">
   <div class="about-section">
     <div>
       <p class="about-label">Over de reizigers</p>
-      <!-- AANPASSEN: koptekst en namen/verhaal hieronder -->
       <h2 class="about-title">Wie zitten er achter dit dagboek?</h2>
       <p class="about-text">
         Wij zijn Wouter, Anne-Charlotte, Maurits en Florine en we zijn op een avontuurlijke reis door IJsland.
@@ -271,8 +287,8 @@
         maar ook als herinnering voor onszelf.
       </p>
     </div>
-    <!-- AANPASSEN: de vier statistieken -->
     <div class="about-stats">
+      <!-- Pas de vier getallen en labels hieronder aan -->
       <div><div class="about-stat-number">13</div><div class="about-stat-label">Dagen onderweg</div></div>
       <div><div class="about-stat-number">~3.200</div><div class="about-stat-label">km gereden</div></div>
       <div><div class="about-stat-number">4</div><div class="about-stat-label">Watervallen gezien</div></div>
@@ -281,50 +297,79 @@
   </div>
 </section>
 
-<!-- AANPASSEN: footer tekst -->
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❻ — Footertekst                                         ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
 <footer>
   <span class="footer-brand">IJsland 2026</span>
   <p class="footer-text">Gemaakt met liefde, ergens tussen twee gletsjers in.</p>
 </footer>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-/* ════════════════════════════════════════════════════════════════
-   ① VERTREKDATUM & TERUGREIS — pas aan naar jullie echte data
-   ════════════════════════════════════════════════════════════════ */
-const DEPARTURE = new Date('2026-04-20T16:30:00');
-const RETURN    = new Date('2026-05-02T23:59:00');
-const TOTAL_DAYS = 13;
+/* ╔══════════════════════════════════════════════════════════════════════╗
+   ║                                                                     ║
+   ║   ALLE INSTELLINGEN STAAN HIER                                      ║
+   ║   Dit is het enige stuk dat je regelmatig aanpast.                 ║
+   ║   Alles onder "HIERONDER NIETS AANPASSEN" kun je met rust laten.   ║
+   ║                                                                     ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
 
-/* ════════════════════════════════════════════════════════════════
-   ② GEPUBLICEERDE DAGEN
-   Zet dit getal 1 hoger elke keer als je een nieuwe dag publiceert.
-   MOCK: staat nu op 2 voor test; verander naar 0 als je vers begint.
-   ════════════════════════════════════════════════════════════════ */
-const PUBLISHED = 1;
 
-/* ════════════════════════════════════════════════════════════════
-   ③ BEZOCHTE PLAATSEN op de kaart
-   Voeg per dag een nieuw object toe zodra je ergens bent geweest.
-   lat/lng vind je via Google Maps (rechtsklik → "Wat is hier?")
-   isLive: true  = pulserende groene stip (huidige dag)
-   isLive: false = gewone groene stip (al bezocht)
+/* ── INSTELLING 1 ── Reisdata ─────────────────────────────────────────────
+   Formaat datum+tijd: 'JJJJ-MM-DDTHH:MM:SS'
+   De countdown past zich hier automatisch op aan.
+   ────────────────────────────────────────────────────────────────────── */
+const DEPARTURE  = new Date('2026-04-20T16:30:00');   // ← vertrekdatum & -tijd
+const RETURN     = new Date('2026-05-02T23:59:00');   // ← thuiskomstdatum
+const TOTAL_DAYS = 13;                                // ← totaal aantal reisdagen
 
-   MOCK DATA: verwijder de twee items hieronder en begin leeg,
-   of vervang ze door jullie echte eerste twee stopplaatsen.
-   ════════════════════════════════════════════════════════════════ */
+
+/* ── INSTELLING 2 ── Gepubliceerde dagen ──────────────────────────────────
+   Verhoog dit getal elke keer als je een nieuwe dag toevoegt.
+   De teller ("2 van 13 gepubliceerd") werkt automatisch.
+   ────────────────────────────────────────────────────────────────────── */
+const PUBLISHED = 2;   // ← momenteel: dag 1 en 2 zijn gepubliceerd
+
+
+/* ── INSTELLING 3 ── Kaartlocaties ───────────────────────────────────────
+   Voeg per gepubliceerde dag één object toe.
+
+   Coördinaten vinden via Google Maps:
+     1. Ga naar maps.google.com en navigeer naar de plek
+     2. Klik rechts → klik op de coördinaten bovenaan het menu
+     3. Kopieer de twee getallen als lat en lng hieronder
+
+   Velden:
+     lat    → breedtegraad (bijv. 64.1355)
+     lng    → lengtegraad  (bijv. -21.8954 — let op het min-teken!)
+     dag    → dagnummer
+     datum  → datum als tekst voor in de kaartpopup
+     naam   → locatienaam in de kaartpopup
+     isLive → true  = pulserende groene stip (huidige dag)
+               false = gewone groene stip     (al bezocht)
+
+   Zet altijd alleen de laatste dag op isLive: true.
+   ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
-  { lat: 64.1355, lng: -21.8954, dag: 1, datum: '20 april', naam: 'Reykjavik',              isLive: false },
-  { lat: 64.2793, lng: -20.4440, dag: 2, datum: '21 april', naam: 'Úthlid', isLive: true  },
+  { lat: 64.1355, lng: -21.8954, dag: 1, datum: '20 april', naam: 'Reykjavik', isLive: false },
+  { lat: 64.2793, lng: -20.4440, dag: 2, datum: '21 april', naam: 'Úthlid',    isLive: true  },
+
+  /* Sjabloon voor de volgende dag — verwijder de twee // om het aan te zetten:
+  { lat: 00.0000, lng: -00.0000, dag: 3, datum: '22 april', naam: 'Hvolsvöllur', isLive: true }, */
 ];
 
-  /* ════════════════════════════════════════════════════════════════
-   ④ PLACEHOLDER DAGEN (3 t/m 13)
-   Namen die je al weet, worden getoond op de grijze kaart.
-   Laat titel leeg ("") als je het nog niet zeker weet.
-   ════════════════════════════════════════════════════════════════ */
+
+/* ── INSTELLING 4 ── Grijze placeholders (nog niet gepubliceerde dagen) ──
+   Dit zijn de grijze kaarten die je bezoekers zien voor toekomstige dagen.
+   Zodra je een dag publiceert: verwijder dat object uit deze lijst.
+   Als de naam nog onzeker is, laat 'titel' leeg: ''
+   ────────────────────────────────────────────────────────────────────── */
 const PLACEHOLDERS = [
-  { n:'02', datum:'21 April', titel:'Úthlid' },
   { n:'03', datum:'22 April', titel:'Hvolsvöllur' },
   { n:'04', datum:'23 April', titel:'Kirkjubæjarklaustur' },
   { n:'05', datum:'24 April', titel:'Höfn' },
@@ -338,11 +383,11 @@ const PLACEHOLDERS = [
   { n:'13', datum:'2 Mei',    titel:'Terug naar huis' },
 ];
 
-/* ════════════════════════════════════════════════════════════════
-   HIERONDER NIETS AANPASSEN
-   ════════════════════════════════════════════════════════════════ */
 
-// Countdown
+/* ══════════════════════════════════════════════════════════════════════
+   HIERONDER NIETS AANPASSEN — dit stuurt alles automatisch aan
+══════════════════════════════════════════════════════════════════════ */
+
 function tick() {
   const now  = new Date();
   const diff = DEPARTURE - now;
@@ -366,10 +411,8 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-// Dag teller
 document.getElementById('day-count').textContent = `${PUBLISHED} van ${TOTAL_DAYS} gepubliceerd`;
 
-// Placeholder kaarten
 const grid = document.getElementById('days-grid');
 PLACEHOLDERS.forEach(d => {
   const el = document.createElement('div');
@@ -378,7 +421,6 @@ PLACEHOLDERS.forEach(d => {
   grid.appendChild(el);
 });
 
-// Leaflet kaart
 const map = L.map('map', { center:[64.9631,-19.0208], zoom:6, scrollWheelZoom:false });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>', maxZoom:14
@@ -403,7 +445,6 @@ VISITED_PLACES.forEach(p => {
 document.getElementById('map-count').textContent =
   `${VISITED_PLACES.length} locatie${VISITED_PLACES.length===1?'':'s'} bezocht`;
 
-// Parallax
 window.addEventListener('scroll',()=>{
   const a=document.querySelector('.aurora-band');
   if(a) a.style.transform=`translateY(${window.scrollY*0.3}px)`;
