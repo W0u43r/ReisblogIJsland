@@ -306,18 +306,70 @@
   }
 
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-logo { display: none; }
-    .day-hero { padding: 5rem 1.5rem 3rem; height: 80vh; }
-    .day-content, .photo-section, .comments-section { padding-left: 1.5rem; padding-right: 1.5rem; }
-    .weather-bar { padding: 1rem 1.5rem; gap: 1.5rem; }
-    .highlights-bar { padding: 1.5rem; }
-    .day-navigation { grid-template-columns: 1fr; }
-    .day-nav-item:first-child { border-right: none; border-bottom: 1px solid rgba(168,216,234,0.08); }
-    .day-nav-item.next { text-align: left; }
-    .photo-pair { grid-template-columns: 1fr; }
-    .pull-quote { padding: 1.25rem 1.5rem; }
+  nav { 
+    padding: 1rem 1.5rem; 
   }
+
+  .nav-logo { 
+    display: none; 
+  }
+
+  .day-hero { 
+    padding: 5rem 1.5rem 3rem; 
+    height: 80vh; 
+  }
+
+  .day-content, 
+  .photo-section, 
+  .comments-section { 
+    padding-left: 1.5rem; 
+    padding-right: 1.5rem; 
+  }
+
+  .weather-bar { 
+    padding: 1rem 1.5rem; 
+    gap: 1.5rem; 
+  }
+
+  .highlights-bar { 
+    padding: 1.5rem; 
+  }
+
+  .photo-pair { 
+    grid-template-columns: 1fr; 
+  }
+
+  .pull-quote { 
+    padding: 1.25rem 1.5rem; 
+  }
+
+  /* 🔥 FIX: Day navigation (dit was je probleem) */
+  .day-navigation { 
+    grid-template-columns: 1fr; 
+  }
+
+  .day-nav-item {
+    padding: 1rem 1.25rem;   /* VEEL kleiner */
+    gap: 0.25rem;
+  }
+
+  .day-nav-item:first-child { 
+    border-right: none; 
+    border-bottom: 1px solid rgba(168,216,234,0.08); 
+  }
+
+  .day-nav-item.next { 
+    text-align: left; 
+  }
+
+  .day-nav-title {
+    font-size: 1rem;
+  }
+
+  .day-nav-direction {
+    font-size: 0.6rem;
+  }
+}
 </style>
 </head>
 <body>
