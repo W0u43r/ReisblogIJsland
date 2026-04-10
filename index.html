@@ -29,26 +29,13 @@
   html { scroll-behavior: smooth; }
   body { background:var(--deep); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
 
-  /* ── NAV ── */
-  nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1.25rem 3rem;
-    background:linear-gradient(to bottom,rgba(10,15,30,0.95),transparent);
-    backdrop-filter:blur(2px);
-  }
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.25rem 3rem; background:linear-gradient(to bottom,rgba(10,15,30,0.95),transparent); backdrop-filter:blur(2px); }
   .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:0.15em; color:var(--ice); text-decoration:none; text-transform:uppercase; }
   .nav-links { display:flex; gap:2rem; list-style:none; }
   .nav-links a { color:var(--muted); text-decoration:none; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; transition:color 0.3s; }
   .nav-links a:hover { color:var(--ice); }
 
-  /* ── HERO ── */
-  .hero {
-    position:relative; min-height:100vh;
-    display:flex; flex-direction:column; justify-content:flex-end;
-    padding:6rem 3rem 4rem;
-    overflow:hidden;
-  }
+  .hero { position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:6rem 3rem 4rem; overflow:hidden; }
   .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(61,220,151,0.08) 0%,transparent 60%),linear-gradient(180deg,#060a14 0%,#0a0f1e 40%,#0f1825 100%); }
   .aurora-band { position:absolute; top:0; left:0; right:0; height:45%; background:linear-gradient(180deg,rgba(61,220,151,0) 0%,rgba(61,220,151,0.04) 30%,rgba(168,216,234,0.06) 60%,transparent 100%); animation:aurora-shift 8s ease-in-out infinite alternate; }
   @keyframes aurora-shift { 0%{opacity:0.6;transform:translateX(-3%) skewX(-1deg)} 100%{opacity:1;transform:translateX(3%) skewX(1deg)} }
@@ -56,12 +43,7 @@
   .hero-content { position:relative; }
   .hero-tag { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem; }
   .hero-tag::before { content:''; display:block; width:2rem; height:1px; background:var(--aurora); }
-  .hero-title {
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(2.5rem,5.5vw,7rem);
-    font-weight:300; line-height:1.05;
-    margin-bottom:2rem; max-width:12ch;
-  }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5.5vw,7rem); font-weight:300; line-height:1.05; margin-bottom:2rem; max-width:12ch; }
   .hero-title em { font-style:italic; color:var(--ice); }
   .hero-sub { color:var(--muted); font-size:1rem; max-width:40ch; line-height:1.7; margin-bottom:3rem; }
   .hero-cta { display:inline-flex; align-items:center; gap:0.75rem; color:var(--text); text-decoration:none; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(168,216,234,0.3); padding:0.9rem 2rem; transition:all 0.3s; }
@@ -72,7 +54,6 @@
   .hero-scroll-hint::after { content:''; display:block; width:1px; height:3rem; background:linear-gradient(to bottom,var(--muted),transparent); }
   @keyframes scroll-hint { 0%,100%{opacity:0.4} 50%{opacity:1} }
 
-  /* ── COUNTDOWN ── */
   .countdown-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); text-align:center; }
   .countdown-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:2rem; }
   .countdown-grid { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; }
@@ -81,7 +62,6 @@
   .countdown-unit-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:0.5rem; display:block; }
   .status-message { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--ice); }
 
-  /* ── DAGBOEKEN ── */
   .days-section { padding:5rem 3rem; }
   .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:3rem; border-bottom:1px solid rgba(168,216,234,0.08); padding-bottom:1.5rem; }
   .section-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; }
@@ -102,70 +82,28 @@
   .day-card-placeholder { background:var(--surface); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.75rem; aspect-ratio:4/3; color:var(--muted); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; border:1px dashed rgba(168,216,234,0.08); }
   .day-card-placeholder .day-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:rgba(168,216,234,0.12); font-weight:300; }
 
-  /* ── KAART (SVG) ── */
   .map-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); }
-  .map-wrap {
-    margin-top:2.5rem;
-    background: var(--surface);
-    border:1px solid rgba(168,216,234,0.1);
-    display:grid;
-    grid-template-columns: 1fr 260px;
-    min-height:500px;
-    overflow:hidden;
-  }
-  .map-svg-area {
-    position:relative;
-    display:flex; align-items:center; justify-content:center;
-    padding:3rem;
-    border-right:1px solid rgba(168,216,234,0.08);
-  }
+  .map-wrap { margin-top:2.5rem; background:var(--surface); border:1px solid rgba(168,216,234,0.1); display:grid; grid-template-columns:1fr 260px; min-height:500px; overflow:hidden; }
+  .map-svg-area { position:relative; display:flex; align-items:center; justify-content:center; padding:3rem; border-right:1px solid rgba(168,216,234,0.08); }
   .iceland-svg { width:100%; max-width:640px; height:auto; }
-
-  /* Route animation */
-  .route-line {
-    stroke-dasharray: 3000;
-    stroke-dashoffset: 3000;
-    animation: draw-route 3s 0.5s ease forwards;
-  }
-  @keyframes draw-route { to { stroke-dashoffset: 0; } }
-  .map-dot { opacity:0; animation: dot-pop 0.3s ease forwards; }
-
-  /* Tooltip on hover */
-  .map-location { cursor:pointer; }
-  .map-location circle { transition: r 0.2s; }
-  .map-location:hover circle { r: 7; }
-
-  /* Sidebar */
-  .map-sidebar {
-    display:flex; flex-direction:column;
-    padding:2rem 1.5rem;
-    gap:0;
-  }
-  .map-sidebar-title {
-    font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase;
-    color:var(--aurora); margin-bottom:1.5rem;
-  }
-  .map-loc-item {
-    display:flex; gap:0.85rem; align-items:flex-start;
-    padding:1rem 0; border-bottom:1px solid rgba(168,216,234,0.07);
-  }
+  .route-line { stroke-dasharray:3000; stroke-dashoffset:3000; animation:draw-route 3s 0.5s ease forwards; }
+  @keyframes draw-route { to { stroke-dashoffset:0; } }
+  .map-dot { opacity:0; animation:dot-pop 0.3s ease forwards; }
+  @keyframes dot-pop { to { opacity:1; } }
+  .map-location circle { transition:r 0.2s; }
+  .map-location:hover circle:nth-child(2) { r:7; }
+  .map-sidebar { display:flex; flex-direction:column; padding:2rem 1.5rem; gap:0; overflow-y:auto; scrollbar-width:none; }
+  .map-sidebar::-webkit-scrollbar { display:none; }
+  .map-sidebar-title { font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; }
+  .map-loc-item { display:flex; gap:0.85rem; align-items:flex-start; padding:1rem 0; border-bottom:1px solid rgba(168,216,234,0.07); }
   .map-loc-item:last-child { border-bottom:none; }
-  .map-loc-dot {
-    width:8px; height:8px; border-radius:50%;
-    background:var(--aurora); margin-top:0.3rem; flex-shrink:0;
-    border:1.5px solid var(--deep);
-    box-shadow:0 0 0 2px rgba(61,220,151,0.3);
-  }
-  .map-loc-dot.live {
-    animation:mlive 1.8s ease-out infinite;
-  }
+  .map-loc-dot { width:8px; height:8px; border-radius:50%; background:var(--aurora); margin-top:0.3rem; flex-shrink:0; border:1.5px solid var(--deep); box-shadow:0 0 0 2px rgba(61,220,151,0.3); }
+  .map-loc-dot.live { animation:mlive 1.8s ease-out infinite; }
   @keyframes mlive { 0%{box-shadow:0 0 0 0 rgba(61,220,151,0.6)} 70%{box-shadow:0 0 0 10px rgba(61,220,151,0)} 100%{box-shadow:0 0 0 0 rgba(61,220,151,0)} }
-  .map-loc-text {}
   .map-loc-dag { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:0.15rem; }
   .map-loc-naam { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:300; color:var(--text); }
   .map-loc-coords { font-size:0.58rem; color:rgba(122,132,148,0.6); margin-top:0.1rem; font-variant-numeric:tabular-nums; }
 
-  /* ── OVER ONS ── */
   .about-outer { border-top:1px solid rgba(168,216,234,0.08); }
   .about-section { padding:5rem 3rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; max-width:1100px; margin:0 auto; }
   .about-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; }
@@ -175,36 +113,25 @@
   .about-stat-number { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--ice); line-height:1; }
   .about-stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.25rem; }
 
-  /* ── FOOTER ── */
   footer { padding:3rem; border-top:1px solid rgba(168,216,234,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
   .footer-text { font-size:0.8rem; color:var(--muted); }
   .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1rem; letter-spacing:0.15em; color:var(--ice); }
-
-
-  /* ════════════════════════════════════════════════════════════════════
-     RESPONSIVE — drie breakpoints
-     ════════════════════════════════════════════════════════════════════ */
 
   /* ── TABLET / iPAD (601px – 1024px) ── */
   @media (min-width:601px) and (max-width:1024px) {
     nav { padding:1.1rem 2rem; }
     .nav-links { display:none; }
     .hero { padding:5rem 2rem 3.5rem; }
-    .hero-title { font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.05; }
-    .hero-sub { max-width:46ch; }
-    .hero-scroll-hint { right:2rem; }
+    .hero-title { font-size:clamp(2.5rem,6vw,4.5rem); }
     .countdown-section { padding:4rem 2rem; }
-    .countdown-grid { gap:2rem; }
     .days-section { padding:4rem 2rem; }
     .days-grid { grid-template-columns:repeat(2,1fr); }
     .map-section { padding:4rem 2rem; }
     .map-wrap { grid-template-columns:1fr; min-height:auto; }
     .map-svg-area { border-right:none; border-bottom:1px solid rgba(168,216,234,0.08); padding:2rem; }
-    .map-sidebar { flex-direction:row; flex-wrap:wrap; gap:0; padding:1.5rem; }
+    .map-sidebar { flex-direction:row; flex-wrap:wrap; padding:1.5rem; }
     .map-loc-item { flex:0 0 50%; padding:0.75rem 1rem 0.75rem 0; }
-    .map-loc-item:nth-child(odd) { border-right:1px solid rgba(168,216,234,0.07); }
     .about-section { padding:4rem 2rem; gap:3rem; }
-    .about-title { font-size:2rem; }
     footer { padding:2rem; }
   }
 
@@ -212,38 +139,21 @@
   @media (max-width:600px) {
     nav { padding:1rem 1.25rem; }
     .nav-links { display:none; }
-
-    .hero {
-      min-height:100svh;
-      padding:4rem 1.25rem 3rem;
-      justify-content:flex-end;
-    }
-    /* Titel: kleinere vaste max zodat woorden nooit meer botsen */
-    .hero-title {
-      font-size: clamp(2rem, 8.5vw, 2.8rem);
-      line-height: 1.1;
-      max-width: none;
-    }
+    .hero { min-height:100svh; padding:4rem 1.25rem 3rem; justify-content:flex-end; }
+    .hero-title { font-size:clamp(2rem,8.5vw,2.8rem); line-height:1.1; max-width:none; }
     .hero-sub { font-size:0.9rem; max-width:none; margin-bottom:2rem; }
     .hero-scroll-hint { display:none; }
-
     .countdown-section { padding:3rem 1.25rem; }
     .countdown-grid { gap:1.25rem; }
     .countdown-number { font-size:clamp(2.2rem,11vw,3rem); }
-
     .days-section { padding:3rem 1.25rem; }
     .days-grid { grid-template-columns:1fr; }
-
     .map-section { padding:3rem 1.25rem; }
     .map-wrap { grid-template-columns:1fr; min-height:auto; }
     .map-svg-area { border-right:none; border-bottom:1px solid rgba(168,216,234,0.08); padding:1.5rem 1rem; }
     .map-sidebar { padding:1.25rem; }
-    .map-sidebar-title { margin-bottom:1rem; }
-    .map-loc-item { padding:0.75rem 0; }
-
     .about-section { grid-template-columns:1fr; gap:2.5rem; padding:3rem 1.25rem; }
     .about-title { font-size:1.85rem; }
-
     footer { padding:2rem 1.25rem; flex-direction:column; text-align:center; }
   }
 </style>
@@ -268,11 +178,6 @@
 <!-- ══════════════════════════════════════════════════════════════════════
 ╔══════════════════════════════════════════════════════════════════════╗
 ║  AANPASSEN ❸ — Hero: openingsteksten                               ║
-║                                                                     ║
-║  · hero-tag   → reisperiode bovenaan (bijv. "April / Mei")          ║
-║  · hero-title → grote hoofdtitel; <em> maakt woorden cursief blauw ║
-║  · hero-sub   → korte beschrijving eronder                          ║
-║  · hero-cta   → tekst op de knop                                    ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ══════════════════════════════════════════════════════════════════════ -->
 <section class="hero">
@@ -291,7 +196,6 @@
 </section>
 
 
-<!-- Countdown loopt automatisch via de instellingen in het script onderaan -->
 <section class="countdown-section" id="countdown-section">
   <p class="countdown-label" id="cd-label">Vertrek over</p>
   <div class="countdown-grid" id="cd-grid">
@@ -307,24 +211,11 @@
 ╔══════════════════════════════════════════════════════════════════════╗
 ║  AANPASSEN ❹ — Dagboeken: elke keer als je een nieuwe dag plaatst  ║
 ║                                                                     ║
-║  STAP 1  Kopieer het blok hieronder ("NIEUW DAG-SJABLOON") en       ║
-║          plak het als laatste <a class="day-card"> voor de          ║
-║          sluitende </div> van days-grid.                            ║
-║          Vul dan in:                                                ║
-║            href   → pad naar de nieuwe dagpagina                   ║
-║            src    → URL of pad naar je foto                        ║
-║            alt    → korte fotobeschrijving                         ║
-║            nummer → bijv. "Dag 03 — 22 April"                      ║
-║            titel  → locatienaam                                     ║
-║            status → gebruik status-live voor de nieuwste dag,       ║
-║                     en verander de vorige dag naar status-done      ║
-║                                                                     ║
-║  STAP 2  Verwijder diezelfde dag uit PLACEHOLDERS in het script.    ║
-║                                                                     ║
-║  STAP 3  Verhoog PUBLISHED in het script met 1.                     ║
-║                                                                     ║
-║  STAP 4  Voeg de locatie toe aan VISITED_PLACES in het script.      ║
-║          Zet de vorige isLive op false, de nieuwe op true.         ║
+║  STAP 1  Kopieer het NIEUW DAG-SJABLOON hieronder en vul in.       ║
+║  STAP 2  Verwijder die dag uit PLACEHOLDERS in het script.         ║
+║  STAP 3  Verhoog PUBLISHED in het script met 1.                    ║
+║  STAP 4  Zet de juiste dag in VISITED_PLACES op isLive: true       ║
+║          (en de vorige op false).                                  ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ══════════════════════════════════════════════════════════════════════ -->
 <section class="days-section" id="dagen">
@@ -343,13 +234,11 @@
       <div class="day-card-content">
         <p class="day-card-number">Dag 01 — 20 April</p>
         <h3 class="day-card-title">Aankomst in Reykjavik</h3>
-        <p class="day-card-meta">
-          <span class="day-card-status status-done"></span>Gepubliceerd
-        </p>
+        <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
       </div>
     </a>
 
-    <!-- DAG 02 — actieve dag (groene pulserende stip) ──────────────── -->
+    <!-- DAG 02 — actieve dag ───────────────────────────────────────── -->
     <a href="dag-02/index.html" class="day-card">
       <img class="day-card-img"
         src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80"
@@ -358,9 +247,7 @@
       <div class="day-card-content">
         <p class="day-card-number">Dag 02 — 21 April</p>
         <h3 class="day-card-title">Úthlid</h3>
-        <p class="day-card-meta">
-          <span class="day-card-status status-live"></span>Nu live
-        </p>
+        <p class="day-card-meta"><span class="day-card-status status-live"></span>Nu live</p>
       </div>
     </a>
 
@@ -383,23 +270,19 @@
       </div>
     </a>
 
-    Vergeet daarna niet (zie de instructies boven dit blok):
-      · Verander dag 02 hierboven van status-live → status-done
+    Vergeet daarna niet:
+      · Verander dag 02 van status-live → status-done
       · Verwijder dag 03 uit PLACEHOLDERS in het script
       · Zet PUBLISHED op 3
-      · Voeg dag 03 toe aan VISITED_PLACES in het script
+      · Zet dag 03 in VISITED_PLACES op isLive: true, dag 02 op false
     ════════════════════════════════════════════════════════════════════
     -->
 
-    <!-- Dag 3–13: verschijnen automatisch als grijze placeholder via het script -->
+    <!-- Dag 3–13 verschijnen automatisch als grijze placeholder -->
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════════════════════════════
-  KAART — locaties worden ingesteld via VISITED_PLACES in het script
-  De kaart is een ingebouwde SVG van IJsland — geen externe library nodig.
-══════════════════════════════════════════════════════════════════════ -->
 <section class="map-section" id="route">
   <div class="section-header">
     <h2 class="section-title">Waar we zijn geweest</h2>
@@ -413,68 +296,29 @@
             <feGaussianBlur stdDeviation="3" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <!-- subtle grid pattern -->
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(168,216,234,0.04)" stroke-width="1"/>
           </pattern>
         </defs>
-
-        <!-- Background grid -->
         <rect width="800" height="520" fill="url(#grid)"/>
-
-        <!-- Iceland landmass — simplified but recognisable outline -->
-        <path id="iceland-land"
-          d="M 148,198
-             C 152,185 158,172 168,162 C 178,152 192,145 208,139
-             C 224,133 242,130 260,126 C 278,122 296,120 316,116
-             C 336,112 356,107 378,104 C 400,101 422,100 444,102
-             C 466,104 488,110 508,118 C 528,126 546,138 560,152
-             C 574,166 582,182 586,198 C 590,214 588,232 582,248
-             C 576,264 564,278 550,290 C 536,302 518,311 500,318
-             C 482,325 462,329 442,334 C 422,339 401,343 380,346
-             C 359,349 338,351 317,350 C 296,349 275,344 256,336
-             C 237,328 220,316 206,302 C 192,288 181,272 172,256
-             C 163,240 154,224 149,210 Z"
-          fill="rgba(168,216,234,0.04)"
-          stroke="rgba(168,216,234,0.22)"
-          stroke-width="1.5"
-          stroke-linejoin="round"/>
-
-        <!-- Interior topographic rings — give depth -->
+        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
+          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.22)" stroke-width="1.5" stroke-linejoin="round"/>
         <path d="M 220,195 C 228,178 248,165 272,158 C 296,151 324,150 350,148 C 376,146 404,144 428,148 C 452,152 472,162 484,176 C 496,190 500,208 496,224 C 492,240 480,254 464,264 C 448,274 428,280 406,283 C 384,286 360,285 338,281 C 316,277 296,268 280,256 C 264,244 252,228 244,212 Z"
           fill="none" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
         <path d="M 278,202 C 284,190 300,181 320,177 C 340,173 364,174 384,174 C 404,174 424,175 438,183 C 452,191 458,204 454,218 C 450,232 438,243 422,249 C 406,255 386,257 366,256 C 346,255 326,249 312,240 C 298,231 288,218 282,206 Z"
           fill="none" stroke="rgba(168,216,234,0.05)" stroke-width="1"/>
-
-        <!-- Westfjords peninsula -->
         <path d="M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"
           fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.18)" stroke-width="1.5"/>
-
-        <!-- Reykjanes peninsula (SW tip) -->
         <path d="M 172,256 C 165,264 158,274 148,278 C 138,282 126,280 120,272 C 114,264 118,252 126,246 C 134,240 144,240 148,240 C 152,240 154,244 158,248 C 162,252 166,254 172,256 Z"
           fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.15)" stroke-width="1"/>
-
-        <!-- Route line — drawn via JS -->
-        <polyline id="route-line" class="route-line"
-          points=""
-          fill="none"
-          stroke="rgba(61,220,151,0.7)"
-          stroke-width="2"
-          stroke-dasharray="6 5"
-          filter="url(#glow-filter)"/>
-
-        <!-- Location dots — rendered via JS -->
+        <polyline id="route-line" class="route-line" points="" fill="none" stroke="rgba(61,220,151,0.7)" stroke-width="2" stroke-dasharray="6 5" filter="url(#glow-filter)"/>
         <g id="map-dots"></g>
-
-        <!-- Compass rose (decorative) -->
         <g transform="translate(730,450)" opacity="0.35">
           <line x1="0" y1="-16" x2="0" y2="16" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
           <line x1="-16" y1="0" x2="16" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
           <polygon points="0,-16 3,-8 0,-10 -3,-8" fill="rgba(168,216,234,0.8)"/>
           <text x="0" y="-20" text-anchor="middle" fill="rgba(168,216,234,0.6)" font-size="8" font-family="DM Sans,sans-serif" letter-spacing="0.1em">N</text>
         </g>
-
-        <!-- Scale label -->
         <g transform="translate(40,480)" opacity="0.4">
           <line x1="0" y1="0" x2="60" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
           <line x1="0" y1="-4" x2="0" y2="4" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
@@ -483,8 +327,6 @@
         </g>
       </svg>
     </div>
-
-    <!-- Sidebar met locaties -->
     <div class="map-sidebar">
       <p class="map-sidebar-title">Bezochte locaties</p>
       <div id="map-locations"></div>
@@ -495,7 +337,7 @@
 
 <!-- ══════════════════════════════════════════════════════════════════════
 ╔══════════════════════════════════════════════════════════════════════╗
-║  AANPASSEN ❺ — Over ons: namen, verhaal en statistieken            ║
+║  AANPASSEN ❺ — Over ons                                            ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ══════════════════════════════════════════════════════════════════════ -->
 <section class="about-outer" id="over">
@@ -503,17 +345,11 @@
     <div>
       <p class="about-label">Over de reizigers</p>
       <h2 class="about-title">Wie zitten er achter dit dagboek?</h2>
-      <p class="about-text">
-        Wij zijn Wouter, Anne-Charlotte, Maurits en Florine en we zijn op een avontuurlijke reis door IJsland.
-      </p>
+      <p class="about-text">Wij zijn Wouter, Anne-Charlotte, Maurits en Florine en we zijn op een avontuurlijke reis door IJsland.</p>
       <br>
-      <p class="about-text">
-        Dit dagboek schrijven we voor onze familie,
-        maar ook als herinnering voor onszelf.
-      </p>
+      <p class="about-text">Dit dagboek schrijven we voor onze familie, maar ook als herinnering voor onszelf.</p>
     </div>
     <div class="about-stats">
-      <!-- Pas de vier getallen en labels hieronder aan -->
       <div><div class="about-stat-number">13</div><div class="about-stat-label">Dagen onderweg</div></div>
       <div><div class="about-stat-number">~3.200</div><div class="about-stat-label">km gereden</div></div>
       <div><div class="about-stat-number">4</div><div class="about-stat-label">Watervallen gezien</div></div>
@@ -537,50 +373,54 @@
 <script>
 /* ╔══════════════════════════════════════════════════════════════════════╗
    ║   ALLE INSTELLINGEN STAAN HIER                                      ║
-   ║   Dit is het enige stuk dat je regelmatig aanpast.                 ║
    ╚══════════════════════════════════════════════════════════════════════╝ */
 
 
 /* ── INSTELLING 1 ── Reisdata ──────────────────────────────────────── */
-const DEPARTURE  = new Date('2026-04-20T17:05:00');   // ← vertrekdatum & -tijd
-const RETURN     = new Date('2026-05-02T23:59:00');   // ← thuiskomstdatum
-const TOTAL_DAYS = 13;                                // ← totaal aantal reisdagen
+const DEPARTURE  = new Date('2026-04-20T17:05:00');
+const RETURN     = new Date('2026-05-02T23:59:00');
+const TOTAL_DAYS = 13;
 
 
-/* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────── */
+/* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────────
+   Verhoog dit getal telkens als je een nieuwe dag publiceert.
+   ────────────────────────────────────────────────────────────────────── */
 const PUBLISHED = 2;
 
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
-   Coördinaten vinden via Google Maps:
-     1. Ga naar maps.google.com en navigeer naar de plek
-     2. Klik rechts → klik op de coördinaten bovenaan het menu
-     3. Kopieer de twee getallen als lat en lng hieronder
-
-   svgX / svgY zijn de pixelposities op de SVG-kaart (viewBox 800×520).
-   Gebruik de lat/lng als richtlijn:
-     · IJsland ligt ruwweg tussen lat 63–67 en lng -13 tot -24
-     · lat 66 ≈ svgY 100,  lat 63 ≈ svgY 360
-     · lng -13 ≈ svgX 600, lng -24 ≈ svgX 130
-   Of sleep de stip visueel op de kaart door svgX/svgY te raden en aan te passen.
-
-   isLive → true = pulserende stip (huidige dag), altijd maar één tegelijk.
+   Alle 13 locaties staan al ingevuld met lat, lng en svgX/svgY.
+   Je hoeft hier alleen nog twee dingen te doen per nieuwe dag:
+     · Zet de nieuwe dag op  isLive: true
+     · Zet de vorige dag op  isLive: false
    ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
-  { lat:64.1355, lng:-21.8954, dag:1, datum:'20 april', naam:'Reykjavik', isLive:false, svgX:208, svgY:268 },
-  { lat:64.2793, lng:-20.4440, dag:2, datum:'21 april', naam:'Úthlid',    isLive:true,  svgX:248, svgY:252 },
-
-  /* Sjabloon voor de volgende dag — verwijder de twee // om het aan te zetten:
-  { lat:00.0000, lng:-00.0000, dag:3, datum:'22 april', naam:'Hvolsvöllur', isLive:true, svgX:000, svgY:000 }, */
+  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:282, svgY:281, isLive:true  },
+  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',       lat:63.7520, lng:-20.2209, svgX:291, svgY:319, isLive:false },
+  /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:382, svgY:317, isLive:false },
+  /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',              lat:64.2497, lng:-15.2020, svgX:506, svgY:283, isLive:false },
+  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',       lat:65.2669, lng:-14.3949, svgX:540, svgY:208, isLive:false },
+  /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',            lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
+  /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',            lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
+  /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',       lat:65.3968, lng:-20.9394, svgX:260, svgY:198, isLive:false },
+  /* Dag 10 */ // { dag:10, datum:'29 april', naam:'Ólafsvík',          lat:64.8960, lng:-23.7060, svgX:142, svgY:235, isLive:false },
+  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',         lat:64.5609, lng:-21.9010, svgX:219, svgY:260, isLive:false },
+  /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',         lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',   lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
 ];
+/* Activeer een dag: verwijder de // aan het begin van de regel.
+   Zet isLive: true voor de huidige dag, false voor alle andere.    */
 
 
-/* ── INSTELLING 4 ── Grijze placeholders ───────────────────────────── */
+/* ── INSTELLING 4 ── Grijze placeholders ──────────────────────────────
+   Verwijder een regel zodra je die dag publiceert.
+   ────────────────────────────────────────────────────────────────────── */
 const PLACEHOLDERS = [
   { n:'03', datum:'22 April', titel:'Hvolsvöllur' },
   { n:'04', datum:'23 April', titel:'Kirkjubæjarklaustur' },
   { n:'05', datum:'24 April', titel:'Höfn' },
-  { n:'06', datum:'25 April', titel:'Egilsstadir' },
+  { n:'06', datum:'25 April', titel:'Egilsstaðir' },
   { n:'07', datum:'26 April', titel:'Mývatn 1/2' },
   { n:'08', datum:'27 April', titel:'Mývatn 2/2' },
   { n:'09', datum:'28 April', titel:'Hvammstangi' },
@@ -595,7 +435,6 @@ const PLACEHOLDERS = [
    HIERONDER NIETS AANPASSEN
 ══════════════════════════════════════════════════════════════════════ */
 
-// Countdown
 function tick() {
   const now = new Date(), diff = DEPARTURE - now;
   if (now > RETURN) {
@@ -618,10 +457,8 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-// Dag teller
 document.getElementById('day-count').textContent = `${PUBLISHED} van ${TOTAL_DAYS} gepubliceerd`;
 
-// Placeholder kaarten
 const grid = document.getElementById('days-grid');
 PLACEHOLDERS.forEach(d => {
   const el = document.createElement('div');
@@ -630,37 +467,32 @@ PLACEHOLDERS.forEach(d => {
   grid.appendChild(el);
 });
 
-// SVG Kaart
 const routeLine = document.getElementById('route-line');
 const dotsGroup = document.getElementById('map-dots');
 const locList   = document.getElementById('map-locations');
 
-// Route lijn
 if (VISITED_PLACES.length > 1) {
   routeLine.setAttribute('points', VISITED_PLACES.map(p => `${p.svgX},${p.svgY}`).join(' '));
 }
 
 VISITED_PLACES.forEach((p, i) => {
   const delay = 0.5 + i * 0.35;
-
-  // SVG dot + label
   const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   g.setAttribute('class', 'map-location');
   g.innerHTML = p.isLive
     ? `<circle cx="${p.svgX}" cy="${p.svgY}" r="10" fill="rgba(61,220,151,0.12)" class="map-dot" style="animation-delay:${delay}s"/>
        <circle cx="${p.svgX}" cy="${p.svgY}" r="5"  fill="#3ddc97" class="map-dot" style="animation-delay:${delay+0.1}s" filter="url(#glow-filter)"/>
-       <text   x="${p.svgX+9}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.75)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.2}s">${p.naam}</text>`
+       <text x="${p.svgX+9}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.75)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.2}s">${p.naam}</text>`
     : `<circle cx="${p.svgX}" cy="${p.svgY}" r="4"  fill="rgba(168,216,234,0.9)" class="map-dot" style="animation-delay:${delay}s"/>
        <circle cx="${p.svgX}" cy="${p.svgY}" r="4"  fill="none" stroke="rgba(168,216,234,0.3)" stroke-width="2" class="map-dot" style="animation-delay:${delay}s"/>
-       <text   x="${p.svgX+8}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.6)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.1}s">${p.naam}</text>`;
+       <text x="${p.svgX+8}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.6)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.1}s">${p.naam}</text>`;
   dotsGroup.appendChild(g);
 
-  // Sidebar item
   const item = document.createElement('div');
   item.className = 'map-loc-item';
   item.innerHTML = `
     <div class="map-loc-dot ${p.isLive ? 'live' : ''}"></div>
-    <div class="map-loc-text">
+    <div>
       <p class="map-loc-dag">Dag ${p.dag} · ${p.datum}</p>
       <p class="map-loc-naam">${p.naam}</p>
       <p class="map-loc-coords">${p.lat}°N &nbsp;${Math.abs(p.lng)}°W</p>
@@ -671,7 +503,6 @@ VISITED_PLACES.forEach((p, i) => {
 document.getElementById('map-count').textContent =
   `${VISITED_PLACES.length} locatie${VISITED_PLACES.length === 1 ? '' : 's'} bezocht`;
 
-// Parallax aurora
 window.addEventListener('scroll', () => {
   const a = document.querySelector('.aurora-band');
   if (a) a.style.transform = `translateY(${window.scrollY * 0.3}px)`;
