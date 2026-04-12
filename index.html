@@ -11,6 +11,7 @@
 -->
 <title>IJsland — Een reis van twee weken door ongerepte vulkanische landschappen</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -288,45 +289,31 @@
   }
   .map-canvas {
     position:relative;
-    padding:3rem;
-    display:flex; align-items:center; justify-content:center;
     border-right:1px solid var(--border);
-    background:
-      radial-gradient(ellipse 70% 60% at 45% 50%, rgba(168,216,234,0.03) 0%, transparent 70%),
-      var(--surface);
     overflow:hidden;
+    min-height:520px;
   }
-  .map-canvas::before {
-    content:'';
-    position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(168,216,234,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(168,216,234,0.03) 1px, transparent 1px);
-    background-size:40px 40px;
+  #leaflet-map {
+    width:100%; height:100%; min-height:520px;
   }
-  .iceland-svg { width:100%; max-width:680px; height:auto; position:relative; }
-
-  /* Route animatie */
-  .route-line {
-    stroke-dasharray:3000;
-    stroke-dashoffset:3000;
-    animation:draw-route 3.5s 0.8s cubic-bezier(0.25,1,0.5,1) forwards;
+  /* Override Leaflet tile brightness voor dark theme */
+  .leaflet-tile { filter: brightness(0.55) saturate(0.4) hue-rotate(185deg); }
+  .leaflet-container { background:#070c18; }
+  /* Leaflet popup styling */
+  .leaflet-popup-content-wrapper {
+    background:var(--surface2) !important;
+    border:1px solid var(--border) !important;
+    border-radius:2px !important;
+    box-shadow:0 8px 32px rgba(0,0,0,0.5) !important;
+    color:var(--text) !important;
   }
-  @keyframes draw-route { to { stroke-dashoffset:0; } }
-
-  .map-dot { opacity:0; animation:dot-pop 0.4s ease forwards; }
-  @keyframes dot-pop { to { opacity:1; } }
-
-  /* SVG tooltip hover */
-  .map-location { cursor:pointer; }
-  .map-location .pulse-outer {
-    transform-origin:center;
-    animation:map-pulse 2.5s ease-out infinite;
-  }
-  @keyframes map-pulse {
-    0%   { opacity:0.7; transform:scale(1); }
-    70%  { opacity:0; transform:scale(2.2); }
-    100% { opacity:0; transform:scale(2.2); }
+  .leaflet-popup-tip { background:var(--surface2) !important; }
+  .leaflet-popup-content { margin:0.9rem 1.1rem !important; }
+  .map-popup-dag { font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--aurora); margin-bottom:0.25rem; font-weight:500; }
+  .map-popup-naam { font-family:'Playfair Display',serif; font-size:1rem; font-weight:400; color:var(--text); }
+  /* Custom marker */
+  .map-marker-live, .map-marker-done {
+    display:flex; align-items:center; justify-content:center;
   }
 
   /* Map sidebar */
@@ -592,117 +579,9 @@
   </div>
 
   <div class="map-wrap">
-    <!-- SVG Kaart -->
+    <!-- OpenStreetMap via Leaflet -->
     <div class="map-canvas">
-      <svg class="iceland-svg" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" id="iceland-svg">
-        <defs>
-          <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#3ddc97" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#3ddc97" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="glow-ice" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#a8d8ea" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#a8d8ea" stop-opacity="0"/>
-          </radialGradient>
-          <filter id="glow-filter" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="soft-glow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="2.5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-
-          <!-- Gradient voor de routelijn -->
-          <linearGradient id="route-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%"   stop-color="#3ddc97" stop-opacity="0.9"/>
-            <stop offset="50%"  stop-color="#a8d8ea" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#3ddc97" stop-opacity="0.9"/>
-          </linearGradient>
-
-          <!-- Clip voor de kaart -->
-          <clipPath id="island-clip">
-            <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z
-            M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"/>
-          </clipPath>
-        </defs>
-
-        <!-- Oceaan achtergrond -->
-        <rect width="800" height="520" fill="rgba(10,16,30,0)"/>
-
-        <!-- Subtiel grid -->
-        <g opacity="0.35">
-          <line x1="0" y1="130" x2="800" y2="130" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="0" y1="200" x2="800" y2="200" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="0" y1="270" x2="800" y2="270" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="0" y1="340" x2="800" y2="340" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="100" y1="0" x2="100" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="200" y1="0" x2="200" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="300" y1="0" x2="300" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="400" y1="0" x2="400" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="500" y1="0" x2="500" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="600" y1="0" x2="600" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-          <line x1="700" y1="0" x2="700" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-        </g>
-
-        <!-- IJsland — vulkanisch binnenland fill -->
-        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
-          fill="rgba(168,216,234,0.04)"/>
-
-        <!-- Gletsjer-highlight in het midden -->
-        <ellipse cx="370" cy="228" rx="90" ry="55"
-          fill="rgba(168,216,234,0.025)" opacity="0.6"/>
-
-        <!-- Rand van IJsland — buitenste glow -->
-        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
-          fill="none" stroke="rgba(168,216,234,0.08)" stroke-width="6"/>
-
-        <!-- Rand van IJsland — scherpe lijn -->
-        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
-          fill="none" stroke="rgba(168,216,234,0.28)" stroke-width="1.5"/>
-
-        <!-- Westfjorden -->
-        <path d="M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"
-          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.22)" stroke-width="1.5"/>
-
-        <!-- Reykjanes schiereiland -->
-        <path d="M 172,256 C 165,264 158,274 148,278 C 138,282 126,280 120,272 C 114,264 118,252 126,246 C 134,240 144,240 148,240 C 152,240 154,244 158,248 C 162,252 166,254 172,256 Z"
-          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.18)" stroke-width="1"/>
-
-        <!-- Route lijn (glow laag) -->
-        <polyline id="route-line-glow" points=""
-          fill="none" stroke="rgba(61,220,151,0.15)" stroke-width="10"
-          stroke-linecap="round" stroke-linejoin="round"/>
-
-        <!-- Route lijn (gestippeld) -->
-        <polyline id="route-line" class="route-line" points=""
-          fill="none" stroke="url(#route-gradient)"
-          stroke-width="1.5" stroke-dasharray="5 6"
-          stroke-linecap="round"/>
-
-        <!-- Kaart dots -->
-        <g id="map-dots"></g>
-
-        <!-- Noordpijl — verfijnd -->
-        <g transform="translate(728,455)" opacity="0.5">
-          <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(168,216,234,0.15)" stroke-width="1"/>
-          <line x1="0" y1="-13" x2="0" y2="13" stroke="rgba(168,216,234,0.4)" stroke-width="0.75"/>
-          <line x1="-13" y1="0" x2="13" y2="0" stroke="rgba(168,216,234,0.2)" stroke-width="0.75"/>
-          <polygon points="0,-14 2.5,-6 0,-8 -2.5,-6" fill="rgba(168,216,234,0.9)"/>
-          <polygon points="0,14 2.5,6 0,8 -2.5,6" fill="rgba(168,216,234,0.3)"/>
-          <text x="0" y="-22" text-anchor="middle" fill="rgba(168,216,234,0.7)"
-            font-size="7.5" font-family="Syne,sans-serif" letter-spacing="0.15em" font-weight="500">N</text>
-        </g>
-
-        <!-- Schaal -->
-        <g transform="translate(36,485)" opacity="0.45">
-          <line x1="0" y1="0" x2="56" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <line x1="0" y1="-3" x2="0" y2="3" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <line x1="56" y1="-3" x2="56" y2="3" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <text x="28" y="-7" text-anchor="middle" fill="rgba(168,216,234,0.55)"
-            font-size="7.5" font-family="Syne,sans-serif" letter-spacing="0.08em">~ 200 km</text>
-        </g>
-      </svg>
+      <div id="leaflet-map"></div>
     </div>
 
     <!-- Sidebar -->
@@ -777,19 +656,19 @@ const PUBLISHED = 2;
      · Zet de vorige dag op  isLive: false
    ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
-  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
-  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',                lat:64.2793, lng:-20.4440, svgX:282, svgY:281, isLive:true  },
-  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:291, svgY:319, isLive:false },
-  /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:382, svgY:317, isLive:false },
-  /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:506, svgY:283, isLive:false },
-  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:540, svgY:208, isLive:false },
-  /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
-  /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
-  /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',         lat:65.3968, lng:-20.9394, svgX:260, svgY:198, isLive:false },
-  /* Dag 10 */ // { dag:10, datum:'29 april', naam:'Ólafsvík',            lat:64.8960, lng:-23.7060, svgX:142, svgY:235, isLive:false },
-  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',           lat:64.5609, lng:-21.9010, svgX:219, svgY:260, isLive:false },
-  /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
-  /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',     lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
+  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',                lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:true  },
+  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:false },
+  /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:410, svgY:408, isLive:false },
+  /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:595, svgY:319, isLive:false },
+  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:666, svgY:158, isLive:false },
+  /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
+  /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
+  /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',         lat:65.3968, lng:-20.9394, svgX:273, svgY:177, isLive:false },
+  /* Dag 10 */ // { dag:10, datum:'29 april', naam:'Ólafsvík',            lat:64.8960, lng:-23.7060, svgX:95,  svgY:271, isLive:false },
+  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',           lat:64.5609, lng:-21.9010, svgX:197, svgY:311, isLive:false },
+  /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
+  /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',     lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
 ];
 
 
@@ -853,87 +732,103 @@ PLACEHOLDERS.forEach(d => {
   grid.appendChild(el);
 });
 
-/* Kaart */
-const routeLine     = document.getElementById('route-line');
-const routeLineGlow = document.getElementById('route-line-glow');
-const dotsGroup     = document.getElementById('map-dots');
-const locList       = document.getElementById('map-locations');
+/* ── Leaflet OpenStreetMap kaart ── */
+const script = document.createElement('script');
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+script.onload = () => initMap();
+document.head.appendChild(script);
 
-if (VISITED_PLACES.length > 1) {
-  const pts = VISITED_PLACES.map(p=>`${p.svgX},${p.svgY}`).join(' ');
-  routeLine.setAttribute('points', pts);
-  routeLineGlow.setAttribute('points', pts);
-}
+function initMap() {
+  // Center op IJsland
+  const map = L.map('leaflet-map', {
+    center: [64.9, -18.5],
+    zoom: 6,
+    zoomControl: true,
+    attributionControl: true,
+    scrollWheelZoom: false,
+  });
 
-VISITED_PLACES.forEach((p, i) => {
-  const delay = 0.8 + i * 0.4;
+  // OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright" style="color:#6b778f">OpenStreetMap</a>',
+    maxZoom: 13,
+  }).addTo(map);
 
-  /* SVG dot */
-  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-  g.setAttribute('class','map-location');
+  // Stijl de attribution
+  map.getContainer().querySelector('.leaflet-control-attribution').style.cssText =
+    'background:rgba(7,12,24,0.8);color:#6b778f;font-size:10px;border:none;';
 
-  if (p.isLive) {
-    g.innerHTML = `
-      <!-- pulserende buitenring -->
-      <circle class="pulse-outer map-dot" cx="${p.svgX}" cy="${p.svgY}" r="14"
-        fill="rgba(61,220,151,0.12)"
-        style="animation-delay:${delay}s; transform-origin:${p.svgX}px ${p.svgY}px;"/>
-      <!-- glowing halo -->
-      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="9"
-        fill="rgba(61,220,151,0.15)"
-        style="animation-delay:${delay+0.05}s"/>
-      <!-- kern -->
-      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="4.5"
-        fill="#3ddc97"
-        style="animation-delay:${delay+0.1}s"
-        filter="url(#glow-filter)"/>
-      <!-- label -->
-      <text class="map-dot" x="${p.svgX+11}" y="${p.svgY-6}"
-        font-size="9.5" fill="rgba(61,220,151,0.9)"
-        font-family="Syne,sans-serif" font-weight="500"
-        style="animation-delay:${delay+0.15}s">${p.naam}</text>`;
-  } else {
-    g.innerHTML = `
-      <!-- ring -->
-      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="6"
-        fill="rgba(168,216,234,0.12)" stroke="rgba(168,216,234,0.4)" stroke-width="1"
-        style="animation-delay:${delay}s"/>
-      <!-- kern -->
-      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="3"
-        fill="rgba(168,216,234,0.85)"
-        style="animation-delay:${delay+0.05}s"/>
-      <!-- label -->
-      <text class="map-dot" x="${p.svgX+10}" y="${p.svgY+4}"
-        font-size="9" fill="rgba(168,216,234,0.65)"
-        font-family="Syne,sans-serif"
-        style="animation-delay:${delay+0.1}s">${p.naam}</text>`;
+  // Route lijn
+  if (VISITED_PLACES.length > 1) {
+    const latlngs = VISITED_PLACES.map(p => [p.lat, p.lng]);
+    L.polyline(latlngs, {
+      color: '#3ddc97',
+      weight: 2,
+      opacity: 0.85,
+      dashArray: '6, 8',
+      lineJoin: 'round',
+    }).addTo(map);
   }
-  dotsGroup.appendChild(g);
 
-  /* Sidebar item */
-  const item = document.createElement('div');
-  item.className = 'map-loc-item';
-  item.innerHTML = `
-    <div class="map-loc-icon ${p.isLive ? 'live' : ''}">
-      <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="${p.isLive ? 3.5 : 2.5}"
-          fill="${p.isLive ? '#3ddc97' : 'rgba(168,216,234,0.8)'}"/>
-      </svg>
-    </div>
-    <div>
-      <p class="map-loc-dag">Dag ${p.dag} · ${p.datum}</p>
-      <p class="map-loc-naam">${p.naam}</p>
-      <p class="map-loc-coords">${p.lat}°N &thinsp; ${Math.abs(p.lng)}°W</p>
-    </div>`;
-  locList.appendChild(item);
-});
+  // Markers
+  VISITED_PLACES.forEach((p, i) => {
+    const isLive = p.isLive;
+    const color  = isLive ? '#3ddc97' : '#a8d8ea';
+    const size   = isLive ? 14 : 10;
 
-/* Map teller */
-const n = VISITED_PLACES.length;
-document.getElementById('map-count').textContent = `${n} locatie${n===1?'':'s'} bezocht`;
-document.getElementById('map-count-num').textContent = n;
-document.getElementById('map-sidebar-sub').textContent =
-  `van ${TOTAL_DAYS} bestemmingen bezocht`;
+    const icon = L.divIcon({
+      className: '',
+      html: isLive
+        ? `<div style="position:relative;width:${size}px;height:${size}px;">
+             <div style="position:absolute;inset:-6px;border-radius:50%;background:rgba(61,220,151,0.15);animation:map-pulse 2s ease-out infinite;"></div>
+             <div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};box-shadow:0 0 10px ${color};border:2px solid rgba(7,12,24,0.6);"></div>
+           </div>`
+        : `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};opacity:0.85;border:1.5px solid rgba(7,12,24,0.5);box-shadow:0 0 6px rgba(168,216,234,0.3);"></div>`,
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+    });
+
+    const popup = L.popup({
+      closeButton: false,
+      offset: [0, -size/2],
+      className: 'map-custom-popup',
+    }).setContent(`
+      <div class="map-popup-dag">Dag ${p.dag} · ${p.datum}</div>
+      <div class="map-popup-naam">${p.naam}</div>
+    `);
+
+    L.marker([p.lat, p.lng], { icon }).addTo(map).bindPopup(popup);
+  });
+
+  // Sidebar lijst
+  const locList = document.getElementById('map-locations');
+  VISITED_PLACES.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'map-loc-item';
+    item.innerHTML = `
+      <div class="map-loc-icon ${p.isLive ? 'live' : ''}">
+        <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="5" r="${p.isLive ? 3.5 : 2.5}"
+            fill="${p.isLive ? '#3ddc97' : 'rgba(168,216,234,0.8)'}"/>
+        </svg>
+      </div>
+      <div>
+        <p class="map-loc-dag">Dag ${p.dag} · ${p.datum}</p>
+        <p class="map-loc-naam">${p.naam}</p>
+        <p class="map-loc-coords">${p.lat}°N &thinsp; ${Math.abs(p.lng)}°W</p>
+      </div>`;
+    // Klik op sidebar item → zoom naar marker
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', () => map.flyTo([p.lat, p.lng], 9, { duration: 1.2 }));
+    locList.appendChild(item);
+  });
+
+  // Map teller
+  const n = VISITED_PLACES.length;
+  document.getElementById('map-count').textContent = `${n} locatie${n===1?'':'s'} bezocht`;
+  document.getElementById('map-count-num').textContent = n;
+  document.getElementById('map-sidebar-sub').textContent = `van ${TOTAL_DAYS} bestemmingen bezocht`;
+}
 
 /* Parallax aurora */
 window.addEventListener('scroll', () => {
@@ -941,5 +836,12 @@ window.addEventListener('scroll', () => {
   if (a) a.style.transform = `translateY(${window.scrollY * 0.25}px)`;
 }, { passive:true });
 </script>
+<style>
+@keyframes map-pulse {
+  0%   { opacity:0.7; transform:scale(1); }
+  70%  { opacity:0;   transform:scale(2.5); }
+  100% { opacity:0;   transform:scale(2.5); }
+}
+</style>
 </body>
 </html>
