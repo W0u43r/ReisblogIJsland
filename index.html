@@ -299,19 +299,8 @@
   @media (max-width:600px) {
     #leaflet-map { min-height:unset; position:absolute; inset:0; }
   }
-  /* OSM tiles volledig hernomen:
-     - Water → site-achtergrond (#070c18)
-     - Land  → wit/lichtgrijs
-     - Filter pipeline: grijsschaal → invert → hue-rotate voor koele tint */
-  .leaflet-tile {
-    filter:
-      grayscale(1)
-      invert(1)
-      brightness(0.18)
-      contrast(6)
-      sepia(0.15)
-      hue-rotate(185deg);
-  }
+  /* Stadia dark tiles — subtiele ijsblauwe tint, land iets lichter */
+  .leaflet-tile { filter: brightness(0.9) hue-rotate(185deg) saturate(0.6); }
   .leaflet-container { background: #070c18; }
   .leaflet-container { background:#070c18; }
   /* Leaflet popup styling */
@@ -763,10 +752,10 @@ function initMap() {
     scrollWheelZoom: false,
   });
 
-  // OpenStreetMap tiles — standaard, werkt overal
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright" style="color:#6b778f">OpenStreetMap</a>',
-    maxZoom: 18,
+  // Stadia Maps — donkere stijl, geen territoriale waterranden
+  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://stadiamaps.com/" style="color:#6b778f">Stadia Maps</a> © <a href="https://www.openstreetmap.org/copyright" style="color:#6b778f">OpenStreetMap</a>',
+    maxZoom: 20,
   }).addTo(map);
 
   // Stijl de attribution
