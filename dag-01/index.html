@@ -302,17 +302,27 @@
   /* ── Zwevende home-knop ── */
   .floating-home {
     position:fixed; bottom:2rem; right:2rem;
-    background:var(--surface2);
-    border:1px solid var(--border);
-    color:var(--muted); text-decoration:none;
-    width:44px; height:44px;
+    background:var(--aurora);
+    border:none;
+    color:var(--deep); text-decoration:none;
+    height:48px;
     display:flex; align-items:center; justify-content:center;
-    font-size:0.72rem; letter-spacing:0.12em;
-    transition:all 0.3s; z-index:300;
+    gap:0.5rem;
+    padding:0 1.25rem;
+    font-family:'Syne', sans-serif;
+    font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase;
+    font-weight:600;
+    transition:all 0.25s; z-index:300;
+    box-shadow:0 4px 20px rgba(61,220,151,0.35);
+    white-space:nowrap;
   }
   .floating-home:hover {
-    border-color:var(--ice-dim); color:var(--ice);
-    background:rgba(168,216,234,0.06);
+    background:#fff;
+    box-shadow:0 6px 28px rgba(61,220,151,0.5);
+    transform:translateY(-2px);
+  }
+  .floating-home svg {
+    width:14px; height:14px; flex-shrink:0;
   }
 
   /* ── Responsive ── */
@@ -600,7 +610,12 @@
 </div>
 
 <!-- Zwevende home-knop — niets aanpassen -->
-<a href="../index.html" class="floating-home" title="Terug naar alle dagen">⌂</a>
+<a href="../index.html" class="floating-home" title="Terug naar alle dagen">
+  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 1.5L1.5 7H3v7h4v-4h2v4h4V7h1.5L8 1.5z" fill="currentColor"/>
+  </svg>
+  Alle dagen
+</a>
 
 
 <script>
