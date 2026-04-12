@@ -299,8 +299,20 @@
   @media (max-width:600px) {
     #leaflet-map { min-height:unset; position:absolute; inset:0; }
   }
-  /* CartoDB Dark Matter is al donker — geen filter nodig */
-  .leaflet-tile { filter: none; }
+  /* OSM tiles volledig hernomen:
+     - Water → site-achtergrond (#070c18)
+     - Land  → wit/lichtgrijs
+     - Filter pipeline: grijsschaal → invert → hue-rotate voor koele tint */
+  .leaflet-tile {
+    filter:
+      grayscale(1)
+      invert(1)
+      brightness(0.18)
+      contrast(6)
+      sepia(0.15)
+      hue-rotate(185deg);
+  }
+  .leaflet-container { background: #070c18; }
   .leaflet-container { background:#070c18; }
   /* Leaflet popup styling */
   .leaflet-popup-content-wrapper {
@@ -751,11 +763,10 @@ function initMap() {
     scrollWheelZoom: false,
   });
 
-  // OpenStreetMap tiles via CartoDB — geen territoriale waterranden
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright" style="color:#6b778f">OpenStreetMap</a> © <a href="https://carto.com/" style="color:#6b778f">CARTO</a>',
-    maxZoom: 19,
-    subdomains: 'abcd',
+  // OpenStreetMap tiles — standaard, werkt overal
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright" style="color:#6b778f">OpenStreetMap</a>',
+    maxZoom: 18,
   }).addTo(map);
 
   // Stijl de attribution
