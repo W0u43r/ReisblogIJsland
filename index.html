@@ -12,149 +12,462 @@
 <title>IJsland — Een reis van twee weken door ongerepte vulkanische landschappen</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  /* ── Kleurenpalet — laat dit staan ── */
   :root {
     --ice: #a8d8ea;
+    --ice-dim: rgba(168,216,234,0.6);
     --aurora: #3ddc97;
-    --deep: #0a0f1e;
-    --surface: #1a2235;
-    --text: #e8eaf0;
-    --muted: #7a8494;
+    --aurora-dim: rgba(61,220,151,0.4);
+    --deep: #070c18;
+    --surface: #0f1726;
+    --surface2: #162035;
+    --text: #dde3ef;
+    --muted: #6b778f;
+    --border: rgba(168,216,234,0.09);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
-  body { background:var(--deep); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--deep);
+    color:var(--text);
+    font-family:'Syne', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
 
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.25rem 3rem; background:linear-gradient(to bottom,rgba(10,15,30,0.95),transparent); backdrop-filter:blur(2px); }
-  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:0.15em; color:var(--ice); text-decoration:none; text-transform:uppercase; }
-  .nav-links { display:flex; gap:2rem; list-style:none; }
-  .nav-links a { color:var(--muted); text-decoration:none; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; transition:color 0.3s; }
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.4rem 3rem;
+    background:linear-gradient(to bottom,rgba(7,12,24,0.97) 0%,rgba(7,12,24,0.6) 70%,transparent);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(168,216,234,0.04);
+  }
+  .nav-logo {
+    font-family:'Playfair Display',serif;
+    font-size:1rem; letter-spacing:0.08em;
+    color:var(--ice); text-decoration:none;
+    font-style:italic;
+  }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a {
+    color:var(--muted); text-decoration:none;
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    transition:color 0.3s;
+    font-weight:500;
+  }
   .nav-links a:hover { color:var(--ice); }
 
-  .hero { position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:6rem 3rem 4rem; overflow:hidden; }
-  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(61,220,151,0.08) 0%,transparent 60%),linear-gradient(180deg,#060a14 0%,#0a0f1e 40%,#0f1825 100%); }
-  .aurora-band { position:absolute; top:0; left:0; right:0; height:45%; background:linear-gradient(180deg,rgba(61,220,151,0) 0%,rgba(61,220,151,0.04) 30%,rgba(168,216,234,0.06) 60%,transparent 100%); animation:aurora-shift 8s ease-in-out infinite alternate; }
-  @keyframes aurora-shift { 0%{opacity:0.6;transform:translateX(-3%) skewX(-1deg)} 100%{opacity:1;transform:translateX(3%) skewX(1deg)} }
-  .stars { position:absolute; inset:0; background-image:radial-gradient(1px 1px at 15% 25%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(1px 1px at 35% 10%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 55% 35%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1px 1px at 75% 15%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 65% 22%,rgba(255,255,255,0.7) 0%,transparent 100%),radial-gradient(1px 1px at 45% 55%,rgba(168,216,234,0.5) 0%,transparent 100%); }
-  .hero-content { position:relative; }
-  .hero-tag { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem; }
-  .hero-tag::before { content:''; display:block; width:2rem; height:1px; background:var(--aurora); }
-  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5.5vw,7rem); font-weight:300; line-height:1.05; margin-bottom:2rem; max-width:12ch; }
+  /* ── HERO ── */
+  .hero {
+    position:relative; min-height:100vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:7rem 4rem 5rem; overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 0%, rgba(61,220,151,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 10%, rgba(168,216,234,0.06) 0%, transparent 55%),
+      linear-gradient(160deg, #050a14 0%, #070c18 50%, #0a1020 100%);
+  }
+  .hero-noise {
+    position:absolute; inset:0; opacity:0.025;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:200px 200px;
+  }
+  .aurora-band {
+    position:absolute; top:0; left:0; right:0; height:55%;
+    background:linear-gradient(180deg,
+      rgba(61,220,151,0.0) 0%,
+      rgba(61,220,151,0.03) 25%,
+      rgba(168,216,234,0.05) 55%,
+      transparent 100%);
+    animation:aurora-shift 10s ease-in-out infinite alternate;
+  }
+  @keyframes aurora-shift {
+    0%  { opacity:0.5; transform:translateX(-4%) scaleX(1.02); }
+    100%{ opacity:1;   transform:translateX(4%) scaleX(0.98); }
+  }
+  .stars {
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.7) 0%,transparent 100%),
+      radial-gradient(1px 1px at 28% 8%,  rgba(255,255,255,0.5) 0%,transparent 100%),
+      radial-gradient(1.5px 1.5px at 52% 28%, rgba(255,255,255,0.8) 0%,transparent 100%),
+      radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,0.4) 0%,transparent 100%),
+      radial-gradient(1px 1px at 88% 22%, rgba(255,255,255,0.6) 0%,transparent 100%),
+      radial-gradient(1.5px 1.5px at 62% 16%, rgba(168,216,234,0.7) 0%,transparent 100%),
+      radial-gradient(1px 1px at 38% 42%, rgba(168,216,234,0.5) 0%,transparent 100%),
+      radial-gradient(1px 1px at 8% 38%,  rgba(255,255,255,0.3) 0%,transparent 100%);
+  }
+  .hero-content { position:relative; max-width:700px; }
+  .hero-eyebrow {
+    display:flex; align-items:center; gap:1rem;
+    font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:2rem; font-weight:500;
+  }
+  .hero-eyebrow::before {
+    content:''; display:block; width:2.5rem; height:1px;
+    background:linear-gradient(to right, var(--aurora), transparent);
+  }
+  .hero-title {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.8rem,5.5vw,6.5rem);
+    font-weight:400; line-height:1.06;
+    margin-bottom:2.5rem;
+    letter-spacing:-0.01em;
+  }
   .hero-title em { font-style:italic; color:var(--ice); }
-  .hero-sub { color:var(--muted); font-size:1rem; max-width:40ch; line-height:1.7; margin-bottom:3rem; }
-  .hero-cta { display:inline-flex; align-items:center; gap:0.75rem; color:var(--text); text-decoration:none; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(168,216,234,0.3); padding:0.9rem 2rem; transition:all 0.3s; }
-  .hero-cta:hover { border-color:var(--ice); color:var(--ice); background:rgba(168,216,234,0.05); }
+  .hero-sub {
+    color:var(--muted); font-size:0.95rem;
+    max-width:42ch; line-height:1.75;
+    margin-bottom:3.5rem; font-weight:400;
+  }
+  .hero-cta {
+    display:inline-flex; align-items:center; gap:1rem;
+    color:var(--text); text-decoration:none;
+    font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+    font-weight:500;
+    border:1px solid rgba(168,216,234,0.25);
+    padding:1rem 2.5rem;
+    transition:all 0.4s;
+    position:relative; overflow:hidden;
+  }
+  .hero-cta::before {
+    content:''; position:absolute; inset:0;
+    background:rgba(168,216,234,0.04);
+    transform:translateX(-100%); transition:transform 0.4s;
+  }
+  .hero-cta:hover::before { transform:translateX(0); }
+  .hero-cta:hover { border-color:var(--ice); color:var(--ice); }
   .hero-cta-arrow { transition:transform 0.3s; }
-  .hero-cta:hover .hero-cta-arrow { transform:translateX(4px); }
-  .hero-scroll-hint { position:absolute; bottom:2rem; right:3rem; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); writing-mode:vertical-rl; display:flex; align-items:center; gap:0.75rem; animation:scroll-hint 2s ease-in-out infinite; }
-  .hero-scroll-hint::after { content:''; display:block; width:1px; height:3rem; background:linear-gradient(to bottom,var(--muted),transparent); }
-  @keyframes scroll-hint { 0%,100%{opacity:0.4} 50%{opacity:1} }
+  .hero-cta:hover .hero-cta-arrow { transform:translateX(5px); }
+  .hero-scroll {
+    position:absolute; bottom:2.5rem; right:4rem;
+    font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--muted); writing-mode:vertical-rl;
+    display:flex; align-items:center; gap:1rem;
+    animation:scroll-hint 2.5s ease-in-out infinite;
+  }
+  .hero-scroll::after {
+    content:''; display:block; width:1px; height:4rem;
+    background:linear-gradient(to bottom,var(--muted),transparent);
+  }
+  @keyframes scroll-hint { 0%,100%{opacity:0.3} 50%{opacity:0.9} }
 
-  .countdown-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); text-align:center; }
-  .countdown-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:2rem; }
-  .countdown-grid { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; }
-  .countdown-unit { text-align:center; }
-  .countdown-number { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,7vw,5rem); font-weight:300; color:var(--ice); line-height:1; display:block; }
-  .countdown-unit-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:0.5rem; display:block; }
-  .status-message { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--ice); }
+  /* ── COUNTDOWN ── */
+  .countdown-section {
+    padding:5rem 4rem;
+    border-top:1px solid var(--border);
+    text-align:center;
+    position:relative;
+  }
+  .countdown-section::before {
+    content:'';
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:1px; height:3rem;
+    background:linear-gradient(to bottom, var(--aurora-dim), transparent);
+  }
+  .countdown-label {
+    font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:2.5rem; font-weight:500;
+  }
+  .countdown-grid {
+    display:flex; justify-content:center; gap:4rem; flex-wrap:wrap;
+  }
+  .countdown-unit { text-align:center; position:relative; }
+  .countdown-unit + .countdown-unit::before {
+    content:':';
+    position:absolute; left:-2.25rem; top:0.3rem;
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.5rem,5vw,4rem);
+    color:rgba(168,216,234,0.15);
+    font-weight:400;
+  }
+  .countdown-number {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.5rem,5vw,4.5rem);
+    font-weight:400; color:var(--ice); line-height:1; display:block;
+  }
+  .countdown-unit-label {
+    font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--muted); margin-top:0.75rem; display:block; font-weight:500;
+  }
+  .status-message {
+    font-family:'Playfair Display',serif;
+    font-size:1.6rem; font-weight:400; font-style:italic; color:var(--ice);
+  }
 
-  .days-section { padding:5rem 3rem; }
-  .section-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:3rem; border-bottom:1px solid rgba(168,216,234,0.08); padding-bottom:1.5rem; }
-  .section-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; }
-  .section-count { font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
-  .days-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5px; background:rgba(168,216,234,0.06); }
-  .day-card { background:var(--deep); position:relative; overflow:hidden; display:block; text-decoration:none; color:inherit; aspect-ratio:4/3; transition:all 0.5s cubic-bezier(0.23,1,0.32,1); }
-  .day-card-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.55; transition:opacity 0.5s,transform 0.8s cubic-bezier(0.23,1,0.32,1); }
-  .day-card:hover .day-card-img { opacity:0.7; transform:scale(1.04); }
-  .day-card-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(6,10,20,0.95) 0%,rgba(6,10,20,0.3) 60%,transparent 100%); }
-  .day-card-content { position:absolute; bottom:0; left:0; right:0; padding:1.75rem; }
-  .day-card-number { font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:0.5rem; }
-  .day-card-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; line-height:1.2; margin-bottom:0.5rem; }
-  .day-card-meta { font-size:0.75rem; color:var(--muted); display:flex; align-items:center; gap:0.5rem; }
-  .day-card-status { display:inline-block; width:6px; height:6px; border-radius:50%; }
-  .status-done { background:var(--ice); }
-  .status-live { background:var(--aurora); box-shadow:0 0 8px var(--aurora); animation:pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-  .day-card-placeholder { background:var(--surface); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.75rem; aspect-ratio:4/3; color:var(--muted); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; border:1px dashed rgba(168,216,234,0.08); }
-  .day-card-placeholder .day-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:rgba(168,216,234,0.12); font-weight:300; }
+  /* ── DAYS ── */
+  .days-section { padding:6rem 4rem; }
+  .section-header {
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:3.5rem; padding-bottom:1.5rem;
+    border-bottom:1px solid var(--border);
+  }
+  .section-title {
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem; font-weight:400; font-style:italic;
+  }
+  .section-count {
+    font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--muted); font-weight:500;
+  }
+  .days-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:2px;
+    background:rgba(168,216,234,0.04);
+  }
+  .day-card {
+    background:var(--deep); position:relative; overflow:hidden;
+    display:block; text-decoration:none; color:inherit;
+    aspect-ratio:3/2;
+    transition:all 0.6s cubic-bezier(0.23,1,0.32,1);
+  }
+  .day-card-img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; opacity:0.5;
+    transition:opacity 0.6s, transform 0.9s cubic-bezier(0.23,1,0.32,1);
+  }
+  .day-card:hover .day-card-img { opacity:0.65; transform:scale(1.05); }
+  .day-card-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to top,rgba(5,10,20,0.97) 0%,rgba(5,10,20,0.35) 55%,transparent 100%);
+  }
+  .day-card-content {
+    position:absolute; bottom:0; left:0; right:0; padding:2rem;
+  }
+  .day-card-number {
+    font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:0.6rem; font-weight:500;
+  }
+  .day-card-title {
+    font-family:'Playfair Display',serif;
+    font-size:1.4rem; font-weight:400; line-height:1.25; margin-bottom:0.75rem;
+  }
+  .day-card-meta {
+    font-size:0.68rem; color:var(--muted);
+    display:flex; align-items:center; gap:0.6rem; font-weight:400;
+    letter-spacing:0.05em;
+  }
+  .day-card-status { display:inline-block; width:5px; height:5px; border-radius:50%; }
+  .status-done { background:var(--ice-dim); }
+  .status-live { background:var(--aurora); box-shadow:0 0 10px var(--aurora); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+  .day-card-placeholder {
+    background:var(--surface);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:0.5rem; aspect-ratio:3/2;
+    color:var(--muted); font-size:0.65rem; letter-spacing:0.18em;
+    text-transform:uppercase; font-weight:500;
+  }
+  .day-card-placeholder .day-num {
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem; color:rgba(168,216,234,0.08); font-weight:400;
+  }
 
-  .map-section { padding:5rem 3rem; border-top:1px solid rgba(168,216,234,0.08); }
-  .map-wrap { margin-top:2.5rem; background:var(--surface); border:1px solid rgba(168,216,234,0.1); display:grid; grid-template-columns:1fr 260px; min-height:500px; overflow:hidden; }
-  .map-svg-area { position:relative; display:flex; align-items:center; justify-content:center; padding:3rem; border-right:1px solid rgba(168,216,234,0.08); }
-  .iceland-svg { width:100%; max-width:640px; height:auto; }
-  .route-line { stroke-dasharray:3000; stroke-dashoffset:3000; animation:draw-route 3s 0.5s ease forwards; }
+  /* ── MAP ── */
+  .map-section {
+    padding:6rem 4rem;
+    border-top:1px solid var(--border);
+  }
+  .map-wrap {
+    margin-top:3rem;
+    display:grid; grid-template-columns:1fr 300px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    overflow:hidden;
+    border-radius:2px;
+    min-height:560px;
+  }
+  .map-canvas {
+    position:relative;
+    padding:3rem;
+    display:flex; align-items:center; justify-content:center;
+    border-right:1px solid var(--border);
+    background:
+      radial-gradient(ellipse 70% 60% at 45% 50%, rgba(168,216,234,0.03) 0%, transparent 70%),
+      var(--surface);
+    overflow:hidden;
+  }
+  .map-canvas::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(168,216,234,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,216,234,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+  }
+  .iceland-svg { width:100%; max-width:680px; height:auto; position:relative; }
+
+  /* Route animatie */
+  .route-line {
+    stroke-dasharray:3000;
+    stroke-dashoffset:3000;
+    animation:draw-route 3.5s 0.8s cubic-bezier(0.25,1,0.5,1) forwards;
+  }
   @keyframes draw-route { to { stroke-dashoffset:0; } }
-  .map-dot { opacity:0; animation:dot-pop 0.3s ease forwards; }
+
+  .map-dot { opacity:0; animation:dot-pop 0.4s ease forwards; }
   @keyframes dot-pop { to { opacity:1; } }
-  .map-location circle { transition:r 0.2s; }
-  .map-location:hover circle:nth-child(2) { r:7; }
-  .map-sidebar { display:flex; flex-direction:column; padding:2rem 1.5rem; gap:0; overflow-y:auto; scrollbar-width:none; }
+
+  /* SVG tooltip hover */
+  .map-location { cursor:pointer; }
+  .map-location .pulse-outer {
+    transform-origin:center;
+    animation:map-pulse 2.5s ease-out infinite;
+  }
+  @keyframes map-pulse {
+    0%   { opacity:0.7; transform:scale(1); }
+    70%  { opacity:0; transform:scale(2.2); }
+    100% { opacity:0; transform:scale(2.2); }
+  }
+
+  /* Map sidebar */
+  .map-sidebar {
+    display:flex; flex-direction:column;
+    padding:0; overflow-y:auto;
+    scrollbar-width:none;
+  }
   .map-sidebar::-webkit-scrollbar { display:none; }
-  .map-sidebar-title { font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; }
-  .map-loc-item { display:flex; gap:0.85rem; align-items:flex-start; padding:1rem 0; border-bottom:1px solid rgba(168,216,234,0.07); }
+  .map-sidebar-header {
+    padding:2rem 2rem 1.25rem;
+    border-bottom:1px solid var(--border);
+    position:sticky; top:0;
+    background:var(--surface);
+    z-index:1;
+  }
+  .map-sidebar-title {
+    font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--aurora); font-weight:500;
+  }
+  .map-sidebar-count {
+    font-family:'Playfair Display',serif;
+    font-size:2rem; font-weight:400; color:var(--ice);
+    margin-top:0.4rem; line-height:1;
+  }
+  .map-sidebar-sub {
+    font-size:0.65rem; color:var(--muted); margin-top:0.2rem;
+    letter-spacing:0.05em;
+  }
+  .map-loc-list { padding:0 2rem; }
+  .map-loc-item {
+    display:flex; gap:1rem; align-items:flex-start;
+    padding:1.25rem 0;
+    border-bottom:1px solid rgba(168,216,234,0.06);
+    transition:background 0.2s;
+  }
   .map-loc-item:last-child { border-bottom:none; }
-  .map-loc-dot { width:8px; height:8px; border-radius:50%; background:var(--aurora); margin-top:0.3rem; flex-shrink:0; border:1.5px solid var(--deep); box-shadow:0 0 0 2px rgba(61,220,151,0.3); }
-  .map-loc-dot.live { animation:mlive 1.8s ease-out infinite; }
-  @keyframes mlive { 0%{box-shadow:0 0 0 0 rgba(61,220,151,0.6)} 70%{box-shadow:0 0 0 10px rgba(61,220,151,0)} 100%{box-shadow:0 0 0 0 rgba(61,220,151,0)} }
-  .map-loc-dag { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:0.15rem; }
-  .map-loc-naam { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:300; color:var(--text); }
-  .map-loc-coords { font-size:0.58rem; color:rgba(122,132,148,0.6); margin-top:0.1rem; font-variant-numeric:tabular-nums; }
+  .map-loc-icon {
+    width:28px; height:28px; flex-shrink:0;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(168,216,234,0.07);
+    border:1px solid rgba(168,216,234,0.15);
+    margin-top:0.1rem;
+  }
+  .map-loc-icon.live {
+    background:rgba(61,220,151,0.12);
+    border-color:rgba(61,220,151,0.4);
+    animation:icon-glow 2s ease-in-out infinite;
+  }
+  @keyframes icon-glow {
+    0%,100% { box-shadow:0 0 0 0 rgba(61,220,151,0.3); }
+    50%      { box-shadow:0 0 0 6px rgba(61,220,151,0); }
+  }
+  .map-loc-icon svg { width:10px; height:10px; }
+  .map-loc-dag {
+    font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:0.2rem; font-weight:500;
+  }
+  .map-loc-naam {
+    font-family:'Playfair Display',serif;
+    font-size:1rem; font-weight:400; color:var(--text);
+    line-height:1.2;
+  }
+  .map-loc-coords {
+    font-size:0.57rem; color:rgba(107,119,143,0.55);
+    margin-top:0.25rem; font-variant-numeric:tabular-nums;
+    letter-spacing:0.04em;
+  }
 
-  .about-outer { border-top:1px solid rgba(168,216,234,0.08); }
-  .about-section { padding:5rem 3rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; max-width:1100px; margin:0 auto; }
-  .about-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--aurora); margin-bottom:1.5rem; }
-  .about-title { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; line-height:1.2; margin-bottom:1.5rem; }
-  .about-text { color:var(--muted); line-height:1.8; font-size:0.95rem; }
-  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-  .about-stat-number { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--ice); line-height:1; }
-  .about-stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.25rem; }
+  /* ── ABOUT ── */
+  .about-outer { border-top:1px solid var(--border); }
+  .about-section {
+    padding:6rem 4rem;
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:6rem; align-items:center;
+    max-width:1140px; margin:0 auto;
+  }
+  .about-label {
+    font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:1.5rem; font-weight:500;
+  }
+  .about-title {
+    font-family:'Playfair Display',serif;
+    font-size:2.4rem; font-weight:400; font-style:italic;
+    line-height:1.2; margin-bottom:1.75rem;
+  }
+  .about-text { color:var(--muted); line-height:1.85; font-size:0.92rem; }
+  .about-text + .about-text { margin-top:1rem; }
+  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+  .about-stat-number {
+    font-family:'Playfair Display',serif;
+    font-size:3rem; font-weight:400; color:var(--ice); line-height:1;
+  }
+  .about-stat-label { font-size:0.7rem; color:var(--muted); margin-top:0.4rem; letter-spacing:0.05em; }
 
-  footer { padding:3rem; border-top:1px solid rgba(168,216,234,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-  .footer-text { font-size:0.8rem; color:var(--muted); }
-  .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1rem; letter-spacing:0.15em; color:var(--ice); }
+  /* ── FOOTER ── */
+  footer {
+    padding:3rem 4rem;
+    border-top:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:1rem;
+  }
+  .footer-text { font-size:0.75rem; color:var(--muted); letter-spacing:0.05em; }
+  .footer-brand {
+    font-family:'Playfair Display',serif;
+    font-size:1rem; color:var(--ice); font-style:italic;
+  }
 
-  /* ── TABLET / iPAD (601px – 1024px) ── */
+  /* ── RESPONSIVE ── */
   @media (min-width:601px) and (max-width:1024px) {
     nav { padding:1.1rem 2rem; }
     .nav-links { display:none; }
-    .hero { padding:5rem 2rem 3.5rem; }
-    .hero-title { font-size:clamp(2.5rem,6vw,4.5rem); }
-    .countdown-section { padding:4rem 2rem; }
-    .days-section { padding:4rem 2rem; }
+    .hero { padding:5rem 2.5rem 4rem; }
+    .countdown-section,.days-section,.map-section { padding:4rem 2.5rem; }
     .days-grid { grid-template-columns:repeat(2,1fr); }
-    .map-section { padding:4rem 2rem; }
-    .map-wrap { grid-template-columns:1fr; min-height:auto; }
-    .map-svg-area { border-right:none; border-bottom:1px solid rgba(168,216,234,0.08); padding:2rem; }
-    .map-sidebar { flex-direction:row; flex-wrap:wrap; padding:1.5rem; }
-    .map-loc-item { flex:0 0 50%; padding:0.75rem 1rem 0.75rem 0; }
-    .about-section { padding:4rem 2rem; gap:3rem; }
-    footer { padding:2rem; }
+    .map-wrap { grid-template-columns:1fr; }
+    .map-canvas { border-right:none; border-bottom:1px solid var(--border); }
+    .map-sidebar { flex-direction:row; flex-wrap:wrap; }
+    .map-loc-list { display:flex; flex-wrap:wrap; }
+    .map-loc-item { flex:0 0 50%; padding-right:1rem; }
+    .about-section { padding:4rem 2.5rem; gap:3.5rem; }
+    footer { padding:2rem 2.5rem; }
   }
-
-  /* ── MOBIEL (≤ 600px) ── */
   @media (max-width:600px) {
-    nav { padding:1rem 1.25rem; }
+    nav { padding:1rem 1.5rem; }
     .nav-links { display:none; }
-    .hero { min-height:100svh; padding:4rem 1.25rem 3rem; justify-content:flex-end; }
-    .hero-title { font-size:clamp(2rem,8.5vw,2.8rem); line-height:1.1; max-width:none; }
-    .hero-sub { font-size:0.9rem; max-width:none; margin-bottom:2rem; }
-    .hero-scroll-hint { display:none; }
-    .countdown-section { padding:3rem 1.25rem; }
-    .countdown-grid { gap:1.25rem; }
-    .countdown-number { font-size:clamp(2.2rem,11vw,3rem); }
-    .days-section { padding:3rem 1.25rem; }
+    .hero { min-height:100svh; padding:5rem 1.5rem 3.5rem; }
+    .hero-title { font-size:clamp(2.2rem,9vw,3rem); }
+    .hero-sub { max-width:none; font-size:0.88rem; }
+    .hero-scroll { display:none; }
+    .countdown-section { padding:3.5rem 1.5rem; }
+    .countdown-grid { gap:1.5rem; }
+    .countdown-unit + .countdown-unit::before { left:-0.85rem; font-size:1.6rem; top:0.5rem; }
+    .days-section,.map-section { padding:3.5rem 1.5rem; }
     .days-grid { grid-template-columns:1fr; }
-    .map-section { padding:3rem 1.25rem; }
-    .map-wrap { grid-template-columns:1fr; min-height:auto; }
-    .map-svg-area { border-right:none; border-bottom:1px solid rgba(168,216,234,0.08); padding:1.5rem 1rem; }
-    .map-sidebar { padding:1.25rem; }
-    .about-section { grid-template-columns:1fr; gap:2.5rem; padding:3rem 1.25rem; }
-    .about-title { font-size:1.85rem; }
-    footer { padding:2rem 1.25rem; flex-direction:column; text-align:center; }
+    .map-wrap { grid-template-columns:1fr; }
+    .map-canvas { border-right:none; border-bottom:1px solid var(--border); padding:1.5rem; }
+    .about-section { grid-template-columns:1fr; gap:3rem; padding:3.5rem 1.5rem; }
+    .about-title { font-size:2rem; }
+    footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
   }
 </style>
 </head>
@@ -182,11 +495,12 @@
 ══════════════════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
   <div class="aurora-band"></div>
   <div class="stars"></div>
-  <div class="hero-scroll-hint">Scroll</div>
+  <div class="hero-scroll">Scroll</div>
   <div class="hero-content">
-    <p class="hero-tag">April / Mei</p>
+    <p class="hero-eyebrow">April · Mei · 2026</p>
     <h1 class="hero-title">Een reis door ongerepte <em>vulkanische</em> landschappen</h1>
     <p class="hero-sub">Dertien dagen door geisers, gletsjers en donkere lavawoestijnen. Volg onze reis dag voor dag.</p>
     <a href="#dagen" class="hero-cta">
@@ -209,13 +523,7 @@
 
 <!-- ══════════════════════════════════════════════════════════════════════
 ╔══════════════════════════════════════════════════════════════════════╗
-║  AANPASSEN ❹ — Dagboeken: elke keer als je een nieuwe dag plaatst  ║
-║                                                                     ║
-║  STAP 1  Kopieer het NIEUW DAG-SJABLOON hieronder en vul in.       ║
-║  STAP 2  Verwijder die dag uit PLACEHOLDERS in het script.         ║
-║  STAP 3  Verhoog PUBLISHED in het script met 1.                    ║
-║  STAP 4  Zet de juiste dag in VISITED_PLACES op isLive: true       ║
-║          (en de vorige op false).                                  ║
+║  AANPASSEN ❹ — Dagboeken                                           ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ══════════════════════════════════════════════════════════════════════ -->
 <section class="days-section" id="dagen">
@@ -232,7 +540,7 @@
         alt="Reykjavik" loading="lazy">
       <div class="day-card-overlay"></div>
       <div class="day-card-content">
-        <p class="day-card-number">Dag 01 — 20 April</p>
+        <p class="day-card-number">Dag 01 · 20 April</p>
         <h3 class="day-card-title">Aankomst in Reykjavik</h3>
         <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
       </div>
@@ -245,7 +553,7 @@
         alt="IJslandse natuur bij Úthlid" loading="lazy">
       <div class="day-card-overlay"></div>
       <div class="day-card-content">
-        <p class="day-card-number">Dag 02 — 21 April</p>
+        <p class="day-card-number">Dag 02 · 21 April</p>
         <h3 class="day-card-title">Úthlid</h3>
         <p class="day-card-meta"><span class="day-card-status status-live"></span>Nu live</p>
       </div>
@@ -262,19 +570,13 @@
         alt="Korte beschrijving van de foto" loading="lazy">
       <div class="day-card-overlay"></div>
       <div class="day-card-content">
-        <p class="day-card-number">Dag 03 — 22 April</p>
+        <p class="day-card-number">Dag 03 · 22 April</p>
         <h3 class="day-card-title">Hvolsvöllur</h3>
         <p class="day-card-meta">
           <span class="day-card-status status-live"></span>Nu live
         </p>
       </div>
     </a>
-
-    Vergeet daarna niet:
-      · Verander dag 02 van status-live → status-done
-      · Verwijder dag 03 uit PLACEHOLDERS in het script
-      · Zet PUBLISHED op 3
-      · Zet dag 03 in VISITED_PLACES op isLive: true, dag 02 op false
     ════════════════════════════════════════════════════════════════════
     -->
 
@@ -288,48 +590,129 @@
     <h2 class="section-title">Waar we zijn geweest</h2>
     <span class="section-count" id="map-count"></span>
   </div>
+
   <div class="map-wrap">
-    <div class="map-svg-area">
+    <!-- SVG Kaart -->
+    <div class="map-canvas">
       <svg class="iceland-svg" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" id="iceland-svg">
         <defs>
-          <filter id="glow-filter" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
+          <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3ddc97" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#3ddc97" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glow-ice" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#a8d8ea" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#a8d8ea" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow-filter" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(168,216,234,0.04)" stroke-width="1"/>
-          </pattern>
+          <filter id="soft-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+
+          <!-- Gradient voor de routelijn -->
+          <linearGradient id="route-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#3ddc97" stop-opacity="0.9"/>
+            <stop offset="50%"  stop-color="#a8d8ea" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#3ddc97" stop-opacity="0.9"/>
+          </linearGradient>
+
+          <!-- Clip voor de kaart -->
+          <clipPath id="island-clip">
+            <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z
+            M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"/>
+          </clipPath>
         </defs>
-        <rect width="800" height="520" fill="url(#grid)"/>
-        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
-          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.22)" stroke-width="1.5" stroke-linejoin="round"/>
-        <path d="M 220,195 C 228,178 248,165 272,158 C 296,151 324,150 350,148 C 376,146 404,144 428,148 C 452,152 472,162 484,176 C 496,190 500,208 496,224 C 492,240 480,254 464,264 C 448,274 428,280 406,283 C 384,286 360,285 338,281 C 316,277 296,268 280,256 C 264,244 252,228 244,212 Z"
-          fill="none" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
-        <path d="M 278,202 C 284,190 300,181 320,177 C 340,173 364,174 384,174 C 404,174 424,175 438,183 C 452,191 458,204 454,218 C 450,232 438,243 422,249 C 406,255 386,257 366,256 C 346,255 326,249 312,240 C 298,231 288,218 282,206 Z"
-          fill="none" stroke="rgba(168,216,234,0.05)" stroke-width="1"/>
-        <path d="M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"
-          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.18)" stroke-width="1.5"/>
-        <path d="M 172,256 C 165,264 158,274 148,278 C 138,282 126,280 120,272 C 114,264 118,252 126,246 C 134,240 144,240 148,240 C 152,240 154,244 158,248 C 162,252 166,254 172,256 Z"
-          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.15)" stroke-width="1"/>
-        <polyline id="route-line" class="route-line" points="" fill="none" stroke="rgba(61,220,151,0.7)" stroke-width="2" stroke-dasharray="6 5" filter="url(#glow-filter)"/>
-        <g id="map-dots"></g>
-        <g transform="translate(730,450)" opacity="0.35">
-          <line x1="0" y1="-16" x2="0" y2="16" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <line x1="-16" y1="0" x2="16" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <polygon points="0,-16 3,-8 0,-10 -3,-8" fill="rgba(168,216,234,0.8)"/>
-          <text x="0" y="-20" text-anchor="middle" fill="rgba(168,216,234,0.6)" font-size="8" font-family="DM Sans,sans-serif" letter-spacing="0.1em">N</text>
+
+        <!-- Oceaan achtergrond -->
+        <rect width="800" height="520" fill="rgba(10,16,30,0)"/>
+
+        <!-- Subtiel grid -->
+        <g opacity="0.35">
+          <line x1="0" y1="130" x2="800" y2="130" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="0" y1="200" x2="800" y2="200" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="0" y1="270" x2="800" y2="270" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="0" y1="340" x2="800" y2="340" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="100" y1="0" x2="100" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="200" y1="0" x2="200" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="300" y1="0" x2="300" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="400" y1="0" x2="400" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="500" y1="0" x2="500" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="600" y1="0" x2="600" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
+          <line x1="700" y1="0" x2="700" y2="520" stroke="rgba(168,216,234,0.06)" stroke-width="1"/>
         </g>
-        <g transform="translate(40,480)" opacity="0.4">
-          <line x1="0" y1="0" x2="60" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <line x1="0" y1="-4" x2="0" y2="4" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <line x1="60" y1="-4" x2="60" y2="4" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
-          <text x="30" y="-8" text-anchor="middle" fill="rgba(168,216,234,0.6)" font-size="8" font-family="DM Sans,sans-serif">~200 km</text>
+
+        <!-- IJsland — vulkanisch binnenland fill -->
+        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
+          fill="rgba(168,216,234,0.04)"/>
+
+        <!-- Gletsjer-highlight in het midden -->
+        <ellipse cx="370" cy="228" rx="90" ry="55"
+          fill="rgba(168,216,234,0.025)" opacity="0.6"/>
+
+        <!-- Rand van IJsland — buitenste glow -->
+        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
+          fill="none" stroke="rgba(168,216,234,0.08)" stroke-width="6"/>
+
+        <!-- Rand van IJsland — scherpe lijn -->
+        <path d="M 148,198 C 152,185 158,172 168,162 C 178,152 192,145 208,139 C 224,133 242,130 260,126 C 278,122 296,120 316,116 C 336,112 356,107 378,104 C 400,101 422,100 444,102 C 466,104 488,110 508,118 C 528,126 546,138 560,152 C 574,166 582,182 586,198 C 590,214 588,232 582,248 C 576,264 564,278 550,290 C 536,302 518,311 500,318 C 482,325 462,329 442,334 C 422,339 401,343 380,346 C 359,349 338,351 317,350 C 296,349 275,344 256,336 C 237,328 220,316 206,302 C 192,288 181,272 172,256 C 163,240 154,224 149,210 Z"
+          fill="none" stroke="rgba(168,216,234,0.28)" stroke-width="1.5"/>
+
+        <!-- Westfjorden -->
+        <path d="M 148,198 C 144,188 138,175 130,165 C 122,155 112,148 108,138 C 104,128 108,116 116,108 C 124,100 134,96 140,100 C 146,104 146,114 148,122 C 150,130 150,136 154,140 C 158,144 164,143 168,148 C 172,153 168,162 168,162"
+          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.22)" stroke-width="1.5"/>
+
+        <!-- Reykjanes schiereiland -->
+        <path d="M 172,256 C 165,264 158,274 148,278 C 138,282 126,280 120,272 C 114,264 118,252 126,246 C 134,240 144,240 148,240 C 152,240 154,244 158,248 C 162,252 166,254 172,256 Z"
+          fill="rgba(168,216,234,0.04)" stroke="rgba(168,216,234,0.18)" stroke-width="1"/>
+
+        <!-- Route lijn (glow laag) -->
+        <polyline id="route-line-glow" points=""
+          fill="none" stroke="rgba(61,220,151,0.15)" stroke-width="10"
+          stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Route lijn (gestippeld) -->
+        <polyline id="route-line" class="route-line" points=""
+          fill="none" stroke="url(#route-gradient)"
+          stroke-width="1.5" stroke-dasharray="5 6"
+          stroke-linecap="round"/>
+
+        <!-- Kaart dots -->
+        <g id="map-dots"></g>
+
+        <!-- Noordpijl — verfijnd -->
+        <g transform="translate(728,455)" opacity="0.5">
+          <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(168,216,234,0.15)" stroke-width="1"/>
+          <line x1="0" y1="-13" x2="0" y2="13" stroke="rgba(168,216,234,0.4)" stroke-width="0.75"/>
+          <line x1="-13" y1="0" x2="13" y2="0" stroke="rgba(168,216,234,0.2)" stroke-width="0.75"/>
+          <polygon points="0,-14 2.5,-6 0,-8 -2.5,-6" fill="rgba(168,216,234,0.9)"/>
+          <polygon points="0,14 2.5,6 0,8 -2.5,6" fill="rgba(168,216,234,0.3)"/>
+          <text x="0" y="-22" text-anchor="middle" fill="rgba(168,216,234,0.7)"
+            font-size="7.5" font-family="Syne,sans-serif" letter-spacing="0.15em" font-weight="500">N</text>
+        </g>
+
+        <!-- Schaal -->
+        <g transform="translate(36,485)" opacity="0.45">
+          <line x1="0" y1="0" x2="56" y2="0" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
+          <line x1="0" y1="-3" x2="0" y2="3" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
+          <line x1="56" y1="-3" x2="56" y2="3" stroke="rgba(168,216,234,0.5)" stroke-width="1"/>
+          <text x="28" y="-7" text-anchor="middle" fill="rgba(168,216,234,0.55)"
+            font-size="7.5" font-family="Syne,sans-serif" letter-spacing="0.08em">~ 200 km</text>
         </g>
       </svg>
     </div>
+
+    <!-- Sidebar -->
     <div class="map-sidebar">
-      <p class="map-sidebar-title">Bezochte locaties</p>
-      <div id="map-locations"></div>
+      <div class="map-sidebar-header">
+        <p class="map-sidebar-title">Bezochte locaties</p>
+        <div class="map-sidebar-count" id="map-count-num">—</div>
+        <p class="map-sidebar-sub" id="map-sidebar-sub">van 13 bestemmingen</p>
+      </div>
+      <div class="map-loc-list" id="map-locations"></div>
     </div>
   </div>
 </section>
@@ -346,7 +729,6 @@
       <p class="about-label">Over de reizigers</p>
       <h2 class="about-title">Wie zitten er achter dit dagboek?</h2>
       <p class="about-text">Wij zijn Wouter, Anne-Charlotte, Maurits en Florine en we zijn op een avontuurlijke reis door IJsland.</p>
-      <br>
       <p class="about-text">Dit dagboek schrijven we voor onze familie, maar ook als herinnering voor onszelf.</p>
     </div>
     <div class="about-stats">
@@ -390,27 +772,25 @@ const PUBLISHED = 2;
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
    Alle 13 locaties staan al ingevuld met lat, lng en svgX/svgY.
-   Je hoeft hier alleen nog twee dingen te doen per nieuwe dag:
+   Per nieuwe dag:
      · Zet de nieuwe dag op  isLive: true
      · Zet de vorige dag op  isLive: false
    ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
-  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
-  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:282, svgY:281, isLive:true  },
-  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',       lat:63.7520, lng:-20.2209, svgX:291, svgY:319, isLive:false },
+  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',                lat:64.2793, lng:-20.4440, svgX:282, svgY:281, isLive:true  },
+  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:291, svgY:319, isLive:false },
   /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:382, svgY:317, isLive:false },
-  /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',              lat:64.2497, lng:-15.2020, svgX:506, svgY:283, isLive:false },
-  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',       lat:65.2669, lng:-14.3949, svgX:540, svgY:208, isLive:false },
-  /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',            lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
-  /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',            lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
-  /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',       lat:65.3968, lng:-20.9394, svgX:260, svgY:198, isLive:false },
-  /* Dag 10 */ // { dag:10, datum:'29 april', naam:'Ólafsvík',          lat:64.8960, lng:-23.7060, svgX:142, svgY:235, isLive:false },
-  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',         lat:64.5609, lng:-21.9010, svgX:219, svgY:260, isLive:false },
-  /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',         lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
-  /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',   lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:506, svgY:283, isLive:false },
+  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:540, svgY:208, isLive:false },
+  /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
+  /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:429, svgY:184, isLive:false },
+  /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',         lat:65.3968, lng:-20.9394, svgX:260, svgY:198, isLive:false },
+  /* Dag 10 */ // { dag:10, datum:'29 april', naam:'Ólafsvík',            lat:64.8960, lng:-23.7060, svgX:142, svgY:235, isLive:false },
+  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',           lat:64.5609, lng:-21.9010, svgX:219, svgY:260, isLive:false },
+  /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
+  /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',     lat:64.1355, lng:-21.8954, svgX:219, svgY:291, isLive:false },
 ];
-/* Activeer een dag: verwijder de // aan het begin van de regel.
-   Zet isLive: true voor de huidige dag, false voor alle andere.    */
 
 
 /* ── INSTELLING 4 ── Grijze placeholders ──────────────────────────────
@@ -435,6 +815,7 @@ const PLACEHOLDERS = [
    HIERONDER NIETS AANPASSEN
 ══════════════════════════════════════════════════════════════════════ */
 
+/* Countdown */
 function tick() {
   const now = new Date(), diff = DEPARTURE - now;
   if (now > RETURN) {
@@ -457,56 +838,108 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
+/* Day count */
 document.getElementById('day-count').textContent = `${PUBLISHED} van ${TOTAL_DAYS} gepubliceerd`;
 
+/* Placeholders */
 const grid = document.getElementById('days-grid');
 PLACEHOLDERS.forEach(d => {
   const el = document.createElement('div');
   el.className = 'day-card-placeholder';
-  el.innerHTML = `<span class="day-num">${d.n}</span><span>${d.datum}</span><span style="color:rgba(168,216,234,0.25);font-size:0.65rem;">${d.titel}</span>`;
+  el.innerHTML = `
+    <span class="day-num">${d.n}</span>
+    <span>${d.datum}</span>
+    <span style="color:rgba(168,216,234,0.2);font-size:0.6rem;letter-spacing:0.12em;">${d.titel}</span>`;
   grid.appendChild(el);
 });
 
-const routeLine = document.getElementById('route-line');
-const dotsGroup = document.getElementById('map-dots');
-const locList   = document.getElementById('map-locations');
+/* Kaart */
+const routeLine     = document.getElementById('route-line');
+const routeLineGlow = document.getElementById('route-line-glow');
+const dotsGroup     = document.getElementById('map-dots');
+const locList       = document.getElementById('map-locations');
 
 if (VISITED_PLACES.length > 1) {
-  routeLine.setAttribute('points', VISITED_PLACES.map(p => `${p.svgX},${p.svgY}`).join(' '));
+  const pts = VISITED_PLACES.map(p=>`${p.svgX},${p.svgY}`).join(' ');
+  routeLine.setAttribute('points', pts);
+  routeLineGlow.setAttribute('points', pts);
 }
 
 VISITED_PLACES.forEach((p, i) => {
-  const delay = 0.5 + i * 0.35;
-  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g.setAttribute('class', 'map-location');
-  g.innerHTML = p.isLive
-    ? `<circle cx="${p.svgX}" cy="${p.svgY}" r="10" fill="rgba(61,220,151,0.12)" class="map-dot" style="animation-delay:${delay}s"/>
-       <circle cx="${p.svgX}" cy="${p.svgY}" r="5"  fill="#3ddc97" class="map-dot" style="animation-delay:${delay+0.1}s" filter="url(#glow-filter)"/>
-       <text x="${p.svgX+9}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.75)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.2}s">${p.naam}</text>`
-    : `<circle cx="${p.svgX}" cy="${p.svgY}" r="4"  fill="rgba(168,216,234,0.9)" class="map-dot" style="animation-delay:${delay}s"/>
-       <circle cx="${p.svgX}" cy="${p.svgY}" r="4"  fill="none" stroke="rgba(168,216,234,0.3)" stroke-width="2" class="map-dot" style="animation-delay:${delay}s"/>
-       <text x="${p.svgX+8}" y="${p.svgY+4}" font-size="9" fill="rgba(168,216,234,0.6)" font-family="DM Sans,sans-serif" class="map-dot" style="animation-delay:${delay+0.1}s">${p.naam}</text>`;
+  const delay = 0.8 + i * 0.4;
+
+  /* SVG dot */
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','map-location');
+
+  if (p.isLive) {
+    g.innerHTML = `
+      <!-- pulserende buitenring -->
+      <circle class="pulse-outer map-dot" cx="${p.svgX}" cy="${p.svgY}" r="14"
+        fill="rgba(61,220,151,0.12)"
+        style="animation-delay:${delay}s; transform-origin:${p.svgX}px ${p.svgY}px;"/>
+      <!-- glowing halo -->
+      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="9"
+        fill="rgba(61,220,151,0.15)"
+        style="animation-delay:${delay+0.05}s"/>
+      <!-- kern -->
+      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="4.5"
+        fill="#3ddc97"
+        style="animation-delay:${delay+0.1}s"
+        filter="url(#glow-filter)"/>
+      <!-- label -->
+      <text class="map-dot" x="${p.svgX+11}" y="${p.svgY-6}"
+        font-size="9.5" fill="rgba(61,220,151,0.9)"
+        font-family="Syne,sans-serif" font-weight="500"
+        style="animation-delay:${delay+0.15}s">${p.naam}</text>`;
+  } else {
+    g.innerHTML = `
+      <!-- ring -->
+      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="6"
+        fill="rgba(168,216,234,0.12)" stroke="rgba(168,216,234,0.4)" stroke-width="1"
+        style="animation-delay:${delay}s"/>
+      <!-- kern -->
+      <circle class="map-dot" cx="${p.svgX}" cy="${p.svgY}" r="3"
+        fill="rgba(168,216,234,0.85)"
+        style="animation-delay:${delay+0.05}s"/>
+      <!-- label -->
+      <text class="map-dot" x="${p.svgX+10}" y="${p.svgY+4}"
+        font-size="9" fill="rgba(168,216,234,0.65)"
+        font-family="Syne,sans-serif"
+        style="animation-delay:${delay+0.1}s">${p.naam}</text>`;
+  }
   dotsGroup.appendChild(g);
 
+  /* Sidebar item */
   const item = document.createElement('div');
   item.className = 'map-loc-item';
   item.innerHTML = `
-    <div class="map-loc-dot ${p.isLive ? 'live' : ''}"></div>
+    <div class="map-loc-icon ${p.isLive ? 'live' : ''}">
+      <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="5" cy="5" r="${p.isLive ? 3.5 : 2.5}"
+          fill="${p.isLive ? '#3ddc97' : 'rgba(168,216,234,0.8)'}"/>
+      </svg>
+    </div>
     <div>
       <p class="map-loc-dag">Dag ${p.dag} · ${p.datum}</p>
       <p class="map-loc-naam">${p.naam}</p>
-      <p class="map-loc-coords">${p.lat}°N &nbsp;${Math.abs(p.lng)}°W</p>
+      <p class="map-loc-coords">${p.lat}°N &thinsp; ${Math.abs(p.lng)}°W</p>
     </div>`;
   locList.appendChild(item);
 });
 
-document.getElementById('map-count').textContent =
-  `${VISITED_PLACES.length} locatie${VISITED_PLACES.length === 1 ? '' : 's'} bezocht`;
+/* Map teller */
+const n = VISITED_PLACES.length;
+document.getElementById('map-count').textContent = `${n} locatie${n===1?'':'s'} bezocht`;
+document.getElementById('map-count-num').textContent = n;
+document.getElementById('map-sidebar-sub').textContent =
+  `van ${TOTAL_DAYS} bestemmingen bezocht`;
 
+/* Parallax aurora */
 window.addEventListener('scroll', () => {
   const a = document.querySelector('.aurora-band');
-  if (a) a.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-});
+  if (a) a.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+}, { passive:true });
 </script>
 </body>
 </html>
