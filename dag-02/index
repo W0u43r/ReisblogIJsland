@@ -1,1 +1,61 @@
-code
+<!-- ══════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❾ — Quiz                                        ║
+║  · Pas q-text aan: de vraag                                ║
+║  · Pas opt-btn teksten aan: 4 antwoordopties               ║
+║  · Pas correct[] aan: index van het juiste antwoord (0-3)  ║
+║  · Pas fb-tekst aan: uitleg na het antwoord                ║
+╚══════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════ -->
+<section class="quiz-section">
+  <div class="section-header" style="max-width:900px;margin:0 auto 0;padding:0 4rem;">
+    <h2 class="section-title">Ken jij IJsland al?</h2>
+  </div>
+
+  <div class="quiz-wrap">
+
+    <div class="questions-grid">
+
+      <div class="q-card" id="q0">
+        <p class="q-number">Vraag 01</p>
+        <p class="q-text">Hoe heet de iconische kerk boven de skyline van Reykjavik?</p>
+        <div class="options-grid">
+          <button class="opt-btn" onclick="answer(0,0)"><span class="opt-letter">A</span>Dómkirkjan</button>
+          <button class="opt-btn" onclick="answer(0,1)"><span class="opt-letter">B</span>Hallgrímskirkja</button>
+          <button class="opt-btn" onclick="answer(0,2)"><span class="opt-letter">C</span>Langholtskirkja</button>
+          <button class="opt-btn" onclick="answer(0,3)"><span class="opt-letter">D</span>Fríkirkjan</button>
+        </div>
+        <div class="q-feedback" id="fb0">
+          <strong>Hallgrímskirkja</strong> — 74 meter hoog, vernoemd naar dichter Hallgrímur Pétursson. De voorgevel is geïnspireerd op de basaltkolommen die je overal in IJsland ziet.
+        </div>
+      </div>
+
+      <!-- Herhaal bovenstaand blok voor vraag 02 en 03 -->
+      <!-- Vervang id="q0" → id="q1", id="fb0" → id="fb1" -->
+      <!-- en onclick="answer(0,X)" → answer(1,X) etc. -->
+
+    </div>
+
+    <div class="score-bar" id="score-bar">
+      <div>
+        <div class="score-num" id="score-num">0 / 3</div>
+        <div class="score-label">Goed beantwoord</div>
+        <div class="score-dots" id="score-dots"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="score-msg" id="score-msg"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Pas correct[] aan: index 0=A, 1=B, 2=C, 3=D */
+const correct = [1, 2, 2];
+const results  = [null, null, null];
+const msgs = [
+  'Nog niet op IJslandse snelheid — maar na één dag is dat logisch.',
+  'Niet slecht! Je hebt de aankomst goed doorleefd.',
+  'Uitstekend! Je hebt scherp opgelet vandaag.'
+];
+/* ... rest van het script zoals in de preview ... */
+</script>
