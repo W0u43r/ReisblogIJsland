@@ -1,153 +1,246 @@
-# IJsland Reisblog — Setup Handleiding
+# IJsland 2026 — Dagelijkse update checklist
 
-Een cinematische reisblog voor GitHub Pages. Donker thema, aurora-sfeer, cinematic foto's.
+Gebruik deze handleiding elke avond om de reisblog bij te werken.
+Doe de stappen in volgorde — dan mis je niets.
 
-## Structuur
+---
+
+## Overzicht van de mappenstructuur
 
 ```
-/
-├── index.html          ← Landingspagina (overzicht + kaart + countdown)
+ijsland-2026/
+├── index.html              ← Hoofdpagina (overzicht van alle dagen)
+├── README.md               ← Dit bestand
 ├── dag-01/
-│   └── index.html      ← Dag 1 pagina (volledig ingevuld als voorbeeld)
+│   └── index.html          ← Dagpagina dag 1
 ├── dag-02/
-│   └── index.html      ← Kopieer dag-01 en pas aan
-└── README.md
+│   └── index.html          ← Dagpagina dag 2
+├── dag-03/
+│   └── index.html          ← (nog aan te maken)
+│   ...
+└── images/
+    ├── dag-01/             ← Foto's van dag 1
+    ├── dag-02/             ← Foto's van dag 2
+    └── dag-03/             ← (nog aan te maken)
 ```
 
 ---
 
-## 1. GitHub Pages activeren
+## Stap-voor-stap: nieuwe dag publiceren
 
-1. Maak een nieuwe GitHub repository aan: `gebruikersnaam/ijsland-2025` (of eigen naam)
-2. Push alle bestanden naar de `main` branch
-3. Ga naar **Settings → Pages → Source: Deploy from branch → main → / (root)**
-4. Je site is bereikbaar op: `https://gebruikersnaam.github.io/ijsland-2025/`
+### Stap 1 — Foto's klaarzetten
+
+1. Maak de map `images/dag-XX/` aan (bijv. `images/dag-03/`).
+2. Zet de foto's van die dag daarin.
+3. Gebruik korte bestandsnamen zonder spaties, bijv. `waterval.jpg` of `zonsondergang.jpg`.
+4. **Tip:** verklein de foto's naar maximaal 1920px breed vóór upload — dit laadt veel sneller.
 
 ---
 
-## 2. Countdown instellen
+### Stap 2 — Nieuwe dagpagina aanmaken
 
-Open `index.html` en zoek deze regel:
+1. Kopieer de map `dag-02/` en hernoem hem naar `dag-03/` (of het juiste nummer).
+2. Open `dag-03/index.html` in een teksteditor.
+3. Pas de volgende **8 plekken** aan (zoek op `AANPASSEN ❶` t/m `AANPASSEN ❽`):
 
-```js
-const DEPARTURE = new Date('2025-07-12T08:00:00');
+| # | Wat aanpassen | Voorbeeld |
+|---|---|---|
+| ❶ | Browsertab-titel | `Dag 03 — Hvolsvöllur \| IJsland 2026` |
+| ❷ | Navigatie: vorige/volgende dag-knoppen + paden | `← Dag 02` en `Dag 04 →` |
+| ❸ | Hero: foto, dagnummer, datum, grote titel, intro-zin | zie hieronder |
+| ❹ | Weerbalk: temperatuur, wind, zonsondergang, km gereden | actuele waarden invullen |
+| ❺ | Hoogtepunten: 3–5 bullets van de dag | korte zinnen |
+| ❻ | Verhaal: 3–5 alinea's + 1 pull-quote | schrijf in `<p>` tags |
+| ❼ | Foto's: breed / paar / trio blokken + onderschriften | paden naar `../images/dag-03/` |
+| ❽ | Dag-navigatie onderaan: titels en paden | vorige dag ← → volgende dag |
+
+**Hero foto** (`AANPASSEN ❸`):
+```html
+<img class="day-hero-img"
+  src="../images/dag-03/jouw-foto.jpg"
+  alt="Korte beschrijving">
 ```
 
-Verander de datum naar jouw vertrekdatum.
+**Eerste dag (dag-01):** zet de "← Vorige dag"-knop op `disabled` (staat al zo in het sjabloon).  
+**Laatste dag (dag-13):** zet de "Volgende dag →"-knop op `disabled`.
 
 ---
 
-## 3. Reacties instellen via Giscus (gratis)
+### Stap 3 — Foto's in de pagina plaatsen (`AANPASSEN ❼`)
 
-Giscus gebruikt GitHub Discussions als backend. Volledig gratis.
+Kies per blok de gewenste lay-out:
 
-### Eenmalige setup:
-1. Zorg dat je repo **public** is (vereist voor Giscus)
-2. Activeer **Discussions** in je repo: Settings → Features → ✅ Discussions
-3. Installeer de Giscus app: https://github.com/apps/giscus → geef toegang aan je repo
-4. Ga naar https://giscus.app/
-5. Vul je repo in (bijv. `gebruikersnaam/ijsland-2025`)
-6. Kies mapping: **pathname** (elke dagpagina krijgt eigen discussie)
-7. Kopieer het gegenereerde `<script>` tag
+**A) Breed — één foto, volle breedte:**
+```html
+<div class="photo-hero-block" onclick="openLightbox(this.querySelector('img').src)">
+  <img src="../images/dag-03/landschap.jpg" alt="Omschrijving">
+</div>
+<p class="photo-caption">Onderschrift hier</p>
+```
 
-### Per dagpagina:
-Vervang dit blok in elke `dag-XX/index.html`:
+**B) Paar — twee foto's naast elkaar:**
+```html
+<div class="photo-pair">
+  <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-03/foto-links.jpg" alt="Omschrijving">
+  </div>
+  <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-03/foto-rechts.jpg" alt="Omschrijving">
+  </div>
+</div>
+<p class="photo-caption">Links: naam · Rechts: naam</p>
+```
+
+**C) Trio — drie staande foto's naast elkaar:**
+```html
+<div class="photo-trio">
+  <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-03/staand-1.jpg" alt="Omschrijving">
+  </div>
+  <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-03/staand-2.jpg" alt="Omschrijving">
+  </div>
+  <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-03/staand-3.jpg" alt="Omschrijving">
+  </div>
+</div>
+<p class="photo-caption">Onderschrift voor de drie foto's</p>
+```
+
+---
+
+### Stap 4 — Hoofdpagina bijwerken (`index.html`)
+
+Open `index.html` en doe de volgende 4 dingen:
+
+#### 4a. Nieuwe dagkaart toevoegen in de dagboeken-sectie
+
+Zoek het commentaar `NIEUW DAG-SJABLOON` (rond regel 200) en voeg **boven** het commentaar een nieuw kaartblok in:
 
 ```html
-<!-- Plak hier jouw giscus <script> tag -->
-<div class="giscus"></div>
+<a href="dag-03/index.html" class="day-card">
+  <img class="day-card-img"
+    src="https://images.unsplash.com/photo-XXXXXXX?w=800&q=80"
+    alt="Korte beschrijving"
+    loading="lazy">
+  <div class="day-card-overlay"></div>
+  <div class="day-card-content">
+    <p class="day-card-number">Dag 03 · 22 April</p>
+    <h3 class="day-card-title">Hvolsvöllur</h3>
+    <p class="day-card-meta">
+      <span class="day-card-status status-done"></span>Gepubliceerd
+    </p>
+  </div>
+</a>
 ```
 
-Door:
+- Gebruik `status-done` voor een voltooide dag.
+- Gebruik `status-live` + tekst `Nu live` voor de dag die je **nu** publiceert.
+- Verander de vorige `status-live` dag naar `status-done` + `Gepubliceerd`.
 
-```html
-<script src="https://giscus.app/client.js"
-  data-repo="gebruikersnaam/ijsland-2025"
-  data-repo-id="JOUW_REPO_ID"
-  data-category="Announcements"
-  data-category-id="JOUW_CATEGORY_ID"
-  data-mapping="pathname"
-  data-strict="0"
-  data-reactions-enabled="1"
-  data-emit-metadata="0"
-  data-input-position="bottom"
-  data-theme="dark"
-  data-lang="nl"
-  crossorigin="anonymous"
-  async>
-</script>
-<div class="giscus"></div>
+#### 4b. Teller `PUBLISHED` ophogen
+
+Zoek in het `<script>` blok onderaan `index.html`:
+```javascript
+const PUBLISHED = 2;
+```
+Verhoog het getal met 1 (dus `3`, `4`, etc.).
+
+#### 4c. Nieuwe locatie toevoegen in `VISITED_PLACES`
+
+Zoek het blok `const VISITED_PLACES = [` en verwijder de `//` commentaarslashes vóór de juiste dag:
+```javascript
+/* Dag 03 */ { dag:3, datum:'22 april', naam:'Hvolsvöllur', lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:true  },
+```
+
+- Zet de nieuwe dag op `isLive: true`.
+- Zet de vorige dag terug op `isLive: false`.
+
+#### 4d. Placeholder verwijderen uit `PLACEHOLDERS`
+
+Zoek het blok `const PLACEHOLDERS = [` en verwijder de regel van de dag die je zojuist publiceerde:
+```javascript
+{ n:'03', datum:'22 April', titel:'Hvolsvöllur' },   // ← deze regel verwijderen
 ```
 
 ---
 
-## 4. Nieuwe dag toevoegen
+### Stap 5 — Controleren vóór publicatie
 
-1. Kopieer de map `dag-01/` naar `dag-02/`, `dag-03/`, etc.
-2. Open het nieuwe `index.html` en pas aan:
-   - `<title>` → "Dag 02 — De Gouden Cirkel | IJsland MMXXV"
-   - `dag-number-badge` → "Dag 02"
-   - `day-date` → de juiste datum
-   - `day-hero-title` → naam van de dag
-   - `day-hero-intro` → intro tekst
-   - Weergegevens in de weather-bar
-   - Highlights
-   - De tekst in `<article class="day-content">`
-   - De foto's (vervang de Unsplash URLs door jouw eigen foto-URLs)
-   - Navigatieknoppen (vorige/volgende dag links)
+Open `index.html` lokaal in je browser en check:
 
-3. Open `index.html` (de hoofdpagina):
-   - Verander de day-card van `dag-02` van placeholder naar een echte card (kopieer het format van dag-01 card)
-   - Update de teller: "2 van 14 gepubliceerd"
+- [ ] De countdown staat nog goed (of toont "We zijn onderweg")
+- [ ] De nieuwe dagkaart verschijnt met de juiste foto en status
+- [ ] Het grijze placeholder-vakje voor die dag is verdwenen
+- [ ] De teller bovenaan de dagboeken-sectie klopt (`X van 13 gepubliceerd`)
+- [ ] De kaart toont de nieuwe locatie met de groene pulserende stip
+- [ ] De sidebar op de kaart toont de nieuwe locatie
 
-4. Commit en push naar GitHub → de site update automatisch.
+Open de nieuwe dagpagina (`dag-03/index.html`) en check:
 
----
-
-## 5. Foto's hosten
-
-**Optie A — In de repo zelf (eenvoudigst):**
-- Maak een map `/fotos/dag-01/` aan
-- Zet je foto's erin (geoptimaliseerd: max 800KB per foto, JPEG kwaliteit 80%)
-- Verwijs ernaar: `src="../fotos/dag-01/foto1.jpg"`
-- Gratis, maar repo wordt groot bij veel foto's
-
-**Optie B — Cloudinary (gratis, aanbevolen voor veel foto's):**
-- Maak gratis account op cloudinary.com
-- Upload foto's → kopieer de URL
-- Bonus: Cloudinary verkleint automatisch: voeg `w_1400,q_80` toe aan de URL
-
-**Foto's optimaliseren voor web:**
-- Gebruik https://squoosh.app/ (gratis, browser-based)
-- Aanbevolen: breedte 1400px, JPEG kwaliteit 80%
+- [ ] Browsertab-titel is correct
+- [ ] Vorige/volgende knoppen werken (klikken navigeert naar de juiste dag)
+- [ ] Hero-foto laadt correct
+- [ ] Weerbalk en hoogtepunten staan erin
+- [ ] Foto's laden en lightbox werkt (klik op een foto)
+- [ ] Navigatie onderaan verwijst naar de juiste buur-dagen
 
 ---
 
-## 6. Eigen naam/namen invullen
+### Stap 6 — Publiceren naar GitHub Pages
 
-Zoek in `index.html` naar:
+```bash
+git add .
+git commit -m "Dag 03: Hvolsvöllur"
+git push
 ```
-Wij zijn [Namen]
-```
-En vervang door jullie eigen namen.
+
+Na een minuutje is de blog live op je GitHub Pages URL.
 
 ---
 
-## Handige tools
+## Snelle referentie: statusklassen
 
-| Tool | Gebruik | Link |
-|------|---------|------|
-| Squoosh | Foto's optimaliseren | squoosh.app |
-| Giscus | Reacties | giscus.app |
-| Cloudinary | Foto's hosten | cloudinary.com |
-| GitHub Pages | Website hosten | pages.github.com |
+| Klasse | Betekenis | Uiterlijk |
+|---|---|---|
+| `status-done` | Dag gepubliceerd | klein blauw bolletje |
+| `status-live` | Huidige dag (vandaag) | groen pulserend bolletje |
+
+Er is altijd **maximaal één** dag tegelijk `status-live`.
 
 ---
 
-## Tip: workflow tijdens de reis
+## Snelle referentie: coördinaten per dag
 
-1. Schrijf je dagverhaal in een notitie-app (bijv. Apple Notes of Google Keep)
-2. Selecteer 2-3 beste foto's, optimaliseer ze via Squoosh
-3. Open `dag-XX/index.html` op je laptop, plak tekst en foto-links in
-4. Commit en push via GitHub Desktop (of de GitHub app op je telefoon)
-5. Binnen 1 minuut staat het live
+Alle coördinaten staan al klaar in `index.html` in het `VISITED_PLACES` blok.
+Verwijder gewoon de `//` commentaarslashes bij de juiste dag.
+
+| Dag | Locatie | lat | lng |
+|---|---|---|---|
+| 01 | Reykjavik | 64.1355 | -21.8954 |
+| 02 | Úthlid | 64.2793 | -20.4440 |
+| 03 | Hvolsvöllur | 63.7520 | -20.2209 |
+| 04 | Kirkjubæjarklaustur | 63.7801 | -18.0898 |
+| 05 | Höfn | 64.2497 | -15.2020 |
+| 06 | Egilsstaðir | 65.2669 | -14.3949 |
+| 07 | Mývatn | 65.5887 | -16.9903 |
+| 08 | Mývatn | 65.5887 | -16.9903 |
+| 09 | Hvammstangi | 65.3968 | -20.9394 |
+| 10 | Ólafsvík | 64.8960 | -23.7060 |
+| 11 | Borgarnes | 64.5609 | -21.9010 |
+| 12 | Reykjavik | 64.1355 | -21.8954 |
+| 13 | Terug naar huis | 64.1355 | -21.8954 |
+
+---
+
+## Veelgemaakte fouten
+
+**Foto laadt niet** → controleer of het pad begint met `../images/dag-XX/` (met de `../` ervóór).
+
+**Placeholder verdwijnt niet** → check of je de juiste regel hebt verwijderd uit het `PLACEHOLDERS` array in `index.html`.
+
+**Kaart toont de locatie niet** → check of je de `//` commentaarslashes hebt verwijderd bij de juiste dag in `VISITED_PLACES`.
+
+**Twee groene stippen op de kaart** → je bent vergeten de vorige dag terug te zetten op `isLive: false`.
+
+**Dagkaart-teller klopt niet** → check of je `PUBLISHED` hebt opgehoogd in `index.html`.
