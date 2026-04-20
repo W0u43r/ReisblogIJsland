@@ -650,7 +650,7 @@ const TOTAL_DAYS = 13;
 /* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────────
    Verhoog dit getal telkens als je een nieuwe dag publiceert.
    ────────────────────────────────────────────────────────────────────── */
-const PUBLISHED = 2;
+const PUBLISHED = 1;
 
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
@@ -660,8 +660,8 @@ const PUBLISHED = 2;
      · Zet de vorige dag op  isLive: false
    ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
-  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
-  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',                lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:true  },
+  /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:true },
+  /* Dag 02 */ // { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:false  },
   /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:false },
   /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:410, svgY:408, isLive:false },
   /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:595, svgY:319, isLive:false },
@@ -680,6 +680,7 @@ const VISITED_PLACES = [
    Verwijder een regel zodra je die dag publiceert.
    ────────────────────────────────────────────────────────────────────── */
 const PLACEHOLDERS = [
+  { n:'02', datum:'21 April', titel:'Úthlid' },
   { n:'03', datum:'22 April', titel:'Hvolsvöllur' },
   { n:'04', datum:'23 April', titel:'Kirkjubæjarklaustur' },
   { n:'05', datum:'24 April', titel:'Höfn' },
