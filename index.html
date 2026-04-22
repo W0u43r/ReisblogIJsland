@@ -549,7 +549,18 @@
         <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
       </div>
     </a>
-
+<!-- DAG 03 — gepubliceerd ──────────────────────────────────────── -->
+    <a href="dag-03/index.html" class="day-card">
+      <img class="day-card-img"
+        src="images/dag-03/Ur.jpg"
+        alt="Urriðafoss" loading="lazy">
+      <div class="day-card-overlay"></div>
+      <div class="day-card-content">
+        <p class="day-card-number">Dag 03 · 22 April</p>
+        <h3 class="day-card-title">Geisers en watervallen</h3>
+        <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
+      </div>
+    </a>
     <!--
     ════════════════════════════════════════════════════════════════════
     NIEUW DAG-SJABLOON — kopieer dit blok voor elke nieuwe dag
@@ -650,7 +661,7 @@ const TOTAL_DAYS = 13;
 /* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────────
    Verhoog dit getal telkens als je een nieuwe dag publiceert.
    ────────────────────────────────────────────────────────────────────── */
-const PUBLISHED = 2;
+const PUBLISHED = 3;
 
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
@@ -661,8 +672,8 @@ const PUBLISHED = 2;
    ────────────────────────────────────────────────────────────────────── */
 const VISITED_PLACES = [
   /* Dag 01 */ { dag:1,  datum:'20 april', naam:'Reykjavik',             lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
-  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:true  },
-  /* Dag 03 */ // { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:false },
+  /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:false  },
+  /* Dag 03 */  { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:true },
   /* Dag 04 */ // { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:410, svgY:408, isLive:false },
   /* Dag 05 */ // { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:595, svgY:319, isLive:false },
   /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:666, svgY:158, isLive:false },
@@ -681,7 +692,7 @@ const VISITED_PLACES = [
    ────────────────────────────────────────────────────────────────────── */
 const PLACEHOLDERS = [
 
-  { n:'03', datum:'22 April', titel:'Hvolsvöllur' },
+
   { n:'04', datum:'23 April', titel:'Kirkjubæjarklaustur' },
   { n:'05', datum:'24 April', titel:'Höfn' },
   { n:'06', datum:'25 April', titel:'Egilsstaðir' },
