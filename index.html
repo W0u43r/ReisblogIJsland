@@ -585,6 +585,18 @@
         <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
       </div>
     </a>    
+<!-- DAG 06 — gepubliceerd ──────────────────────────────────────── -->
+    <a href="dag-06/index.html" class="day-card">
+      <img class="day-card-img"
+        src="images/dag-06/Hero.jpg"
+        alt="Paard" loading="lazy">
+      <div class="day-card-overlay"></div>
+      <div class="day-card-content">
+        <p class="day-card-number">Dag 06 · 25 April</p>
+        <h3 class="day-card-title">Slingerend door de Oost fjorden</h3>
+        <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
+      </div>
+    </a>    
     <!--
     ════════════════════════════════════════════════════════════════════
     NIEUW DAG-SJABLOON — kopieer dit blok voor elke nieuwe dag
@@ -650,9 +662,9 @@
       <p class="about-text">Dit dagboek schrijven we voor onze familie, maar ook als herinnering voor onszelf.</p>
     </div>
     <div class="about-stats">
-      <div><div class="about-stat-number">5</div><div class="about-stat-label">Dagen onderweg</div></div>
-      <div><div class="about-stat-number">~840</div><div class="about-stat-label">km gereden</div></div>
-      <div><div class="about-stat-number">10</div><div class="about-stat-label">Watervallen gezien</div></div>
+      <div><div class="about-stat-number">6</div><div class="about-stat-label">Dagen onderweg</div></div>
+      <div><div class="about-stat-number">~1110</div><div class="about-stat-label">km gereden</div></div>
+      <div><div class="about-stat-number">12</div><div class="about-stat-label">Watervallen gezien</div></div>
       <div><div class="about-stat-number">∞</div><div class="about-stat-label">Verwachtingen</div></div>
     </div>
   </div>
@@ -685,7 +697,7 @@ const TOTAL_DAYS = 13;
 /* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────────
    Verhoog dit getal telkens als je een nieuwe dag publiceert.
    ────────────────────────────────────────────────────────────────────── */
-const PUBLISHED = 5;
+const PUBLISHED = 6;
 
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
@@ -699,8 +711,8 @@ const VISITED_PLACES = [
   /* Dag 02 */ { dag:2,  datum:'21 april', naam:'Úthlid',              lat:64.2793, lng:-20.4440, svgX:278, svgY:345, isLive:false  },
   /* Dag 03 */ { dag:3,  datum:'22 april', naam:'Hvolsvöllur',         lat:63.7520, lng:-20.2209, svgX:281, svgY:425, isLive:false },
   /* Dag 04 */ { dag:4,  datum:'23 april', naam:'Kirkjubæjarklaustur', lat:63.7801, lng:-18.0898, svgX:410, svgY:408, isLive:false },
-  /* Dag 05 */ { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:595, svgY:319, isLive:true },
-  /* Dag 06 */ // { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:666, svgY:158, isLive:false },
+  /* Dag 05 */ { dag:5,  datum:'24 april', naam:'Höfn',                lat:64.2497, lng:-15.2020, svgX:595, svgY:319, isLive:false },
+  /* Dag 06 */ { dag:6,  datum:'25 april', naam:'Egilsstaðir',         lat:65.2669, lng:-14.3949, svgX:666, svgY:158, isLive:true },
   /* Dag 07 */ // { dag:7,  datum:'26 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
   /* Dag 08 */ // { dag:8,  datum:'27 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
   /* Dag 09 */ // { dag:9,  datum:'28 april', naam:'Hvammstangi',         lat:65.3968, lng:-20.9394, svgX:273, svgY:177, isLive:false },
@@ -717,7 +729,6 @@ const VISITED_PLACES = [
 const PLACEHOLDERS = [
 
 
-  { n:'06', datum:'25 April', titel:'Egilsstaðir' },
   { n:'07', datum:'26 April', titel:'Mývatn 1/2' },
   { n:'08', datum:'27 April', titel:'Mývatn 2/2' },
   { n:'09', datum:'28 April', titel:'Hvammstangi' },
