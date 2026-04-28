@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❶ — Paginatitel (browsertab)                            ║
+║  Formaat: Dag XX — Locatienaam | IJsland 2026                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->
+<title>Dag 08 — Dagje op zee | IJsland 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ice: #a8d8ea;
+    --ice-dim: rgba(168,216,234,0.55);
+    --aurora: #3ddc97;
+    --aurora-dim: rgba(61,220,151,0.4);
+    --deep: #070c18;
+    --mid: #0d1526;
+    --surface: #0f1726;
+    --surface2: #162035;
+    --text: #dde3ef;
+    --muted: #6b778f;
+    --border: rgba(168,216,234,0.09);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--deep);
+    color:var(--text);
+    font-family:'Syne', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+
+  /* ── Voortgangsbalk ── */
+  #progress-bar {
+    position:fixed; top:0; left:0; height:2px;
+    background:linear-gradient(to right, var(--aurora), var(--ice));
+    z-index:200; width:0%;
+    transition:width 0.1s linear;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.4rem 3rem;
+    background:rgba(7,12,24,0.92);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-back {
+    color:var(--muted); text-decoration:none;
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    font-weight:500;
+    display:flex; align-items:center; gap:0.6rem;
+    transition:color 0.3s;
+  }
+  .nav-back:hover { color:var(--ice); }
+  .nav-logo {
+    font-family:'Playfair Display', serif;
+    font-size:1rem; letter-spacing:0.06em;
+    color:var(--ice); text-decoration:none;
+    font-style:italic;
+  }
+  .nav-day-nav { display:flex; gap:1.5rem; }
+  .nav-day-btn {
+    color:var(--muted); text-decoration:none;
+    font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase;
+    font-weight:500;
+    transition:color 0.3s; padding:0.25rem 0;
+  }
+  .nav-day-btn:hover { color:var(--ice); }
+  .nav-day-btn.disabled { opacity:0.25; pointer-events:none; }
+
+  /* ── Hero ── */
+  .day-hero {
+    position:relative; height:100vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:7rem 4rem 5rem; overflow:hidden;
+  }
+  .day-hero-img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; opacity:0.9;
+    transition:opacity 1s ease;
+  }
+  .day-hero-overlay {
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(7,12,24,1) 0%, rgba(7,12,24,0.7) 35%, rgba(7,12,24,0.1) 100%),
+      linear-gradient(to right, rgba(7,12,24,0.3) 0%, transparent 60%);
+  }
+  /* Noise textuur over de hero */
+  .day-hero-noise {
+    position:absolute; inset:0; opacity:0.025; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:200px 200px;
+  }
+  .day-hero-content { position:relative; max-width:800px; }
+  .day-hero-eyebrow {
+    display:flex; align-items:center; gap:1.25rem;
+    margin-bottom:1.5rem;
+  }
+  .day-number-badge {
+    font-size:0.62rem; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--aurora); font-weight:500;
+    border:1px solid rgba(61,220,151,0.3);
+    padding:0.4rem 0.9rem;
+  }
+  .day-date {
+    font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--muted); font-weight:500;
+  }
+  .day-hero-title {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(3rem,7vw,6rem);
+    font-weight:400; line-height:1.0;
+    margin-bottom:1.75rem;
+    letter-spacing:-0.01em;
+  }
+  .day-hero-title em { font-style:italic; color:var(--ice); }
+  .day-hero-intro {
+    color:var(--muted); font-size:1rem;
+    max-width:52ch; line-height:1.8; font-weight:400;
+  }
+
+  /* ── Weerbalk ── */
+  .weather-bar {
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    padding:1.5rem 4rem;
+    display:flex; gap:3rem; flex-wrap:wrap;
+    align-items:center;
+  }
+  .weather-item {
+    display:flex; align-items:center; gap:0.6rem;
+    font-size:0.75rem; color:var(--muted); font-weight:400;
+    letter-spacing:0.04em;
+  }
+  .weather-value { color:var(--text); font-weight:500; margin-left:0.25rem; }
+  .weather-icon { font-size:1rem; line-height:1; }
+
+  /* ── Hoogtepunten ── */
+  .highlights-bar {
+    background:var(--surface2);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:2.25rem 4rem;
+  }
+  .highlights-label {
+    font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:1.5rem; font-weight:500;
+  }
+  .highlights-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:1.25rem 3rem;
+  }
+  .highlight-item { display:flex; align-items:flex-start; gap:0.85rem; }
+  .highlight-dot {
+    width:4px; height:4px; border-radius:50%;
+    background:var(--aurora); margin-top:0.5rem; flex-shrink:0;
+    box-shadow:0 0 6px var(--aurora-dim);
+  }
+  .highlight-text { font-size:0.88rem; color:var(--muted); line-height:1.6; font-weight:400; }
+
+  /* ── Verhaal ── */
+  .day-content {
+    max-width:720px; margin:0 auto;
+    padding:5rem 4rem;
+  }
+  .day-text { font-size:1.05rem; line-height:1.95; color:#bfc5d4; }
+  .day-text p + p { margin-top:1.6em; }
+
+  .pull-quote {
+    margin:3.5rem 0;
+    padding:2rem 2.5rem;
+    border-left:1.5px solid var(--aurora);
+    background:rgba(61,220,151,0.025);
+    position:relative;
+  }
+  .pull-quote::before {
+    content:'"';
+    position:absolute; top:-0.5rem; left:1.75rem;
+    font-family:'Playfair Display', serif;
+    font-size:5rem; color:rgba(61,220,151,0.1);
+    line-height:1; font-style:italic;
+    pointer-events:none;
+  }
+  .pull-quote p {
+    font-family:'Playfair Display', serif;
+    font-size:1.5rem; font-weight:400; font-style:italic;
+    line-height:1.5; color:var(--ice);
+    position:relative;
+  }
+
+  /* ── Foto's ── */
+  .photo-section {
+    max-width:1200px; margin:0 auto;
+    padding:0 4rem 6rem;
+  }
+  .photo-label {
+    font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:1.75rem;
+    display:flex; align-items:center; gap:1rem;
+    font-weight:500;
+  }
+  .photo-label::after {
+    content:''; flex:1; height:1px;
+    background:linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* Breed */
+  .photo-hero-block {
+    position:relative; overflow:hidden; cursor:zoom-in;
+    margin-bottom:2px;
+  }
+  .photo-hero-block img {
+    width:100%; display:block; aspect-ratio:16/7; object-fit:cover;
+    opacity:0.8;
+    transition:opacity 0.6s, transform 0.9s cubic-bezier(0.23,1,0.32,1);
+  }
+  .photo-hero-block:hover img { transform:scale(1.02); opacity:1; }
+
+  /* Paar */
+  .photo-pair {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:2px; margin-bottom:2px;
+  }
+  .photo-pair-item { position:relative; overflow:hidden; cursor:zoom-in; }
+  .photo-pair-item img {
+    width:100%; display:block; aspect-ratio:4/3; object-fit:cover;
+    opacity:0.75;
+    transition:opacity 0.6s, transform 0.9s cubic-bezier(0.23,1,0.32,1);
+  }
+  .photo-pair-item:hover img { transform:scale(1.03); opacity:1; }
+
+  /* Trio */
+  .photo-trio {
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:2px; margin-bottom:2px;
+  }
+  .photo-trio .photo-pair-item img { aspect-ratio:3/4; }
+
+  .photo-caption {
+    font-size:0.72rem; color:var(--muted);
+    margin-top:0.85rem; font-style:italic;
+    text-align:center; letter-spacing:0.04em;
+  }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    display:none; position:fixed; inset:0; z-index:500;
+    background:rgba(5,9,18,0.97);
+    align-items:center; justify-content:center;
+    cursor:zoom-out;
+    backdrop-filter:blur(4px);
+  }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:90vh; object-fit:contain; }
+  .lightbox-close {
+    position:absolute; top:2rem; right:2.5rem;
+    color:var(--muted); font-size:1.25rem;
+    cursor:pointer; background:none; border:none;
+    transition:color 0.3s; font-family:'Syne',sans-serif;
+    font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
+    font-weight:500;
+  }
+  .lightbox-close:hover { color:var(--text); }
+
+  /* ── Dag-navigatie onderaan ── */
+  .day-navigation {
+    border-top:1px solid var(--border);
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  .day-nav-item {
+    padding:0rem 4rem; text-decoration:none; color:inherit;
+    transition:background 0.3s;
+    display:flex; flex-direction:column; gap:0.4rem;
+  }
+  .day-nav-item:hover { background:rgba(168,216,234,0.025); }
+  .day-nav-item:first-child { border-right:1px solid var(--border); }
+  .day-nav-item.next { text-align:right; }
+  .day-nav-direction {
+    font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--muted); font-weight:500;
+  }
+  .day-nav-title {
+    font-family:'Playfair Display', serif;
+    font-size:1.1rem; font-weight:400; font-style:italic;
+    color:var(--ice);
+  }
+
+  /* ── Zwevende home-knop ── */
+  .floating-home {
+    position:fixed; bottom:1.75rem; right:1.75rem;
+    background:var(--aurora);
+    border:none;
+    color:var(--deep); text-decoration:none;
+    height:38px;
+    display:flex; align-items:center; justify-content:center;
+    gap:0.4rem;
+    padding:0 0.9rem;
+    font-family:'Syne', sans-serif;
+    font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase;
+    font-weight:600;
+    transition:all 0.25s; z-index:300;
+    box-shadow:0 4px 16px rgba(61,220,151,0.3);
+    white-space:nowrap;
+  }
+  .floating-home:hover {
+    background:#fff;
+    box-shadow:0 6px 24px rgba(61,220,151,0.45);
+    transform:translateY(-2px);
+  }
+  .floating-home svg {
+    width:12px; height:12px; flex-shrink:0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width:768px) {
+    nav { padding:0rem 1.5rem; }
+    .nav-logo { display:none; }
+    .day-hero { height:85svh; padding:5rem 1.5rem 3.5rem; }
+    .weather-bar { padding:1.25rem 1.5rem; gap:1.25rem; }
+    .highlights-bar { padding:2rem 1.5rem; }
+    .day-content { padding:3.5rem 1.5rem; }
+    .photo-section { padding:0 1.5rem 4rem; }
+    .photo-pair, .photo-trio { grid-template-columns:1fr; }
+    .photo-trio .photo-pair-item img { aspect-ratio:unset; }
+    .pull-quote { padding:1.5rem; margin:2.5rem 0; }
+    .pull-quote p { font-size:1.25rem; }
+    .day-navigation { grid-template-columns:1fr 1fr; }
+    .day-nav-item { padding:1.5rem; }
+    .day-nav-title { font-size:0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❷ — Navigatiebalk                                       ║
+║                                                                     ║
+║  · nav-back  → altijd "../index.html" laten staan                  ║
+║  · nav-logo  → naam van je blog (zelfde op elke dagpagina)         ║
+║  · Linker knop → vorige dag; zet op .disabled als dag 01           ║
+║  · Rechter knop → volgende dag; pas pad aan                        ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->
+<nav>
+  <a href="../index.html" class="nav-back">← Alle dagen</a>
+  <a href="../index.html" class="nav-logo">IJsland 2026</a>
+  <div class="nav-day-nav">
+    <a href="../dag-07/index.html" class="nav-day-btn">Dag 07 →</a>
+    <a href="#" class="nav-day-btn disabled">← Dag 09</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❸ — Hero: foto, dagnummer, datum en intro               ║
+║                                                                     ║
+║  · src    → ../images/dag-XX/bestandsnaam.jpg                      ║
+║  · badge  → "Dag 01", "Dag 02", enz.                               ║
+║  · datum  → "Maandag 20 April 2026"                                ║
+║  · title  → grote titel; <em> maakt een woord cursief ijsblauw     ║
+║  · intro  → één à twee zinnen sfeerimpressie                       ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<section class="day-hero">
+  <img class="day-hero-img"
+    src="../images/dag-08/Hero.jpg"
+    alt="Hero">
+  <div class="day-hero-overlay"></div>
+  <div class="day-hero-noise"></div>
+  <div class="day-hero-content">
+    <div class="day-hero-eyebrow">
+      <span class="day-number-badge">Dag 06</span>
+      <span class="day-date">Maandag 27 April 2026</span>
+    </div>
+    <h1 class="day-hero-title">Dagje   <em>op zee</em> </h1>
+    <p class="day-hero-intro">
+     Vandaag gingen we op de boot op zoek naar walvissen en papagaaiduikers.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❹ — Weer & statistieken van de dag                      ║
+║                                                                     ║
+║  Pas de waarden aan; voeg items toe of verwijder ze naar wens.     ║
+║  Icoon = emoji: ☀️ zonnig  ⛅ bewolkt  🌧️ regen  🌨️ sneeuw         ║
+║                 🌬️ wind    🌫️ mist     🌤️ half bewolkt ☁️            ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<div class="weather-bar">
+  <div class="weather-item">
+    <span class="weather-icon">☁️</span>
+    <span> Bewolkte dag</span>
+  </div>
+  <div class="weather-item">
+    <span>Temperatuur</span>
+    <span class="weather-value">9°C</span>
+  </div>
+  <div class="weather-item">
+    <span>Wind</span>
+    <span class="weather-value">37 km/u Z</span>
+  </div>
+  <div class="weather-item">
+    <span>Zonsondergang</span>
+    <span class="weather-value">21:29</span>
+  </div>
+  <div class="weather-item">
+    <span>km gereden</span>
+    <span class="weather-value">100 km</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❺ — Hoogtepunten van de dag                             ║
+║                                                                     ║
+║  Drie tot vijf korte bullets. Kopieer een highlight-item voor meer. ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<div class="highlights-bar">
+  <p class="highlights-label">Hoogtepunten van vandaag </p>
+  <div class="highlights-grid">
+    <div class="highlight-item">
+      <div class="highlight-dot"></div>
+      <span class="highlight-text">Walvissen spotten op zee</span>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-dot"></div>
+      <span class="highlight-text">Papegaaiduikers voorbij zien vliegen</span>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❻ — Verhaal van de dag                                  ║
+║                                                                     ║
+║  Schrijf in gewone <p> alinea's.                                   ║
+║  Pull-quote: één zin die je extra wilt laten opvallen.             ║
+║  Gebruik <em> voor cursieve nadruk.                                ║
+║                                                                     ║
+║  Tip: 3–5 alinea's is genoeg. Foto's vertellen de rest.           ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<article class="day-content">
+  <div class="day-text">
+    <p>
+      Nieuwe tekst
+      
+    </p>
+
+    <p>
+      
+ Nieuwe tekst
+
+    </p>
+
+    <!-- Pull-quote: één zin die de sfeer van de dag samenvat -->
+    <div class="pull-quote">
+      <p>  Na de walvis hebben we ook nog wat papegaaiduikers gezien</p>
+    </div>
+
+    <p>
+
+Maurits: Ik begon met heel vroeg op staan al rond 6, 7 uur. Na het ontbijt gingen we naar een grot maar dat was minder leuk dan verwacht na de grot hebben we geluncht bij de volgende plek waar we naar wilden gaan. 
+    De plek waar de heen gingen was een boot waarmee we naar walvissen gingen zoeken. We hadden er een gevonden en die klapte in het water met zijn zijvin en dat is heel cool. En we hadden de walvis bijna anderhalf 
+    uur gezien op de boot en deed hele coole trucjes. Na de walvis hebben we ook nog wat papegaaiduikers gezien. Na dat avontuur gingen we terug naar het huisje en ging papa pannenkoeken bakken 😋.
+      
+    
+    </p>
+
+    <p>
+      
+Hoi ik ben Florine en dit is mijn blog en we hebben vandaag iets leuks gedaan. 
+We gingen eerst naar een grot onder een scheur.  En we gingen naar een bultrugwalvis kijken op de boot. Het was 50 keer leuk. Ik zag de spuit en vin bovenop hun rug en zijn staart en dan klappen, cool hè. Daarna gingen we weer terug naar het huisje.
+
+
+    </p>
+  </div>
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❼ — Foto's                                              ║
+║                                                                     ║
+║  Map: images/dag-XX/   —   Pad: ../images/dag-01/naam.jpg          ║
+║                                                                     ║
+║  A) BREED — één foto, volle breedte (16:7 verhouding):             ║
+║     <div class="photo-hero-block" onclick="openLightbox(...)">     ║
+║       <img src="..." alt="...">                                    ║
+║     </div>                                                         ║
+║                                                                     ║
+║  B) PAAR — twee foto's naast elkaar (4:3 verhouding):              ║
+║     <div class="photo-pair">                                       ║
+║       <div class="photo-pair-item" onclick="openLightbox(...)">    ║
+║         <img src="..." alt="...">                                  ║
+║       </div>                                                       ║
+║       <div class="photo-pair-item" onclick="openLightbox(...)">    ║
+║         <img src="..." alt="...">                                  ║
+║       </div>                                                       ║
+║     </div>                                                         ║
+║                                                                     ║
+║  C) TRIO — drie staande foto's naast elkaar (3:4 verhouding):      ║
+║     <div class="photo-trio">                                       ║
+║       <div class="photo-pair-item" onclick="openLightbox(...)">    ║
+║         <img src="..." alt="...">                                  ║
+║       </div>                                                       ║
+║       ... (herhaal 2× meer)                                        ║
+║     </div>                                                         ║
+║                                                                     ║
+║  Caption na elk blok:                                              ║
+║     <p class="photo-caption">Onderschrift hier</p>                ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<section class="photo-section">
+  <p class="photo-label">Foto's van dag 08</p>
+
+  
+
+
+  <!-- Lay-out B: paar   -->
+  <div class="photo-pair" style="margin-top:2px;">
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-08/ACF.jpg" alt="AC en Florine op de boot">
+    </div>
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-08/M.jpg" alt=" Maurits op de boot">
+    </div>
+  </div>
+  <p class="photo-caption">Foto's: Ontspannen op de boot</p>
+
+  <!-- Lay-out B: paar   -->
+  <div class="photo-pair" style="margin-top:2px;">
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-08/Vin.jpg" alt="Walvis">
+    </div>
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-08/Papagaai.jpg" alt="Papegaaiduiker">
+    </div>
+  </div>
+  <p class="photo-caption">Foto 1: Bultrug net voordat hij duikt &nbsp;·&nbsp; Foto 2: Papegaaiduikers</p>
+
+
+  
+  <!-- Lay-out A: breed   
+  <div class="photo-hero-block" onclick="openLightbox(this.querySelector('img').src)">
+    <img src="../images/dag-07/NL.jpg" alt="Noorderlicht">
+  </div>
+  <p class="photo-caption">Vaag noorderlicht</p>
+-->
+  
+  <!-- Lay-out C: trio  
+
+  <div class="photo-trio" style="margin-top:2px;">
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-04/Maurts.jpg" alt="Maurits">
+    </div>
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-04/CF.jpg" alt="AC&F">
+    </div>
+    <div class="photo-pair-item" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="../images/dag-04/F.jpg" alt="M&F">
+    </div>
+  </div>
+  <p class="photo-caption">Beschrijving </p>
+ -->
+</section>
+
+  
+<!-- ══════════════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════╗
+║  AANPASSEN ❽ — Navigatie onderaan (vorige / volgende dag)          ║
+║                                                                     ║
+║  · Eerste dag: laat de linker link staan met pointer-events:none   ║
+║  · Laatste dag: doe hetzelfde voor de rechter link                 ║
+║  · Pas titels en paden aan per dag                                 ║
+╚══════════════════════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════════════════════ -->
+<nav class="day-navigation">
+  <a href="../dag-07/index.html" class="day-nav-item prev">
+    <span class="day-nav-direction">← Vorige dag</span>
+    <span class="day-nav-title">Krachtige waterval en bubbelend modder</span>
+  </a>
+    <a href="#" class="day-nav-item next" style="opacity:0.25;pointer-events:none;">
+    <span class="day-nav-direction">← Volgende dag</span>
+    <span class="day-nav-title">—</span>
+  </a>
+</nav>
+
+
+<!-- Lightbox — niets aanpassen -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">Sluiten ✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Zwevende home-knop — niets aanpassen -->
+<a href="../index.html" class="floating-home" title="Terug naar alle dagen">
+  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 1.5L1.5 7H3v7h4v-4h2v4h4V7h1.5L8 1.5z" fill="currentColor"/>
+  </svg>
+  Home
+</a>
+
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   HIERONDER NIETS AANPASSEN
+══════════════════════════════════════════════════════════════════════ */
+
+// Scroll-voortgangsbalk
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}, { passive: true });
+
+// Lightbox
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
