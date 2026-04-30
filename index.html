@@ -645,6 +645,18 @@
         <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
       </div>
     </a>      
+ <!-- DAG 11 — gepubliceerd ──────────────────────────────────────── -->
+    <a href="dag-11/index.html" class="day-card">
+      <img class="day-card-img"
+        src="images/dag-10/Hero.jpg"
+        alt="Paard" loading="lazy">
+      <div class="day-card-overlay"></div>
+      <div class="day-card-content">
+        <p class="day-card-number">Dag 11 · 30 April</p>
+        <h3 class="day-card-title">Op verkenningstour door Snæffellsnes</h3>
+        <p class="day-card-meta"><span class="day-card-status status-done"></span>Gepubliceerd</p>
+      </div>
+    </a>      
     <!--
     ════════════════════════════════════════════════════════════════════
     NIEUW DAG-SJABLOON — kopieer dit blok voor elke nieuwe dag
@@ -745,7 +757,7 @@ const TOTAL_DAYS = 13;
 /* ── INSTELLING 2 ── Gepubliceerde dagen ───────────────────────────────
    Verhoog dit getal telkens als je een nieuwe dag publiceert.
    ────────────────────────────────────────────────────────────────────── */
-const PUBLISHED = 10;
+const PUBLISHED = 11;
 
 
 /* ── INSTELLING 3 ── Kaartlocaties ────────────────────────────────────
@@ -764,8 +776,8 @@ const VISITED_PLACES = [
   /* Dag 07 */ { dag:7,  datum:'26 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
   /* Dag 08 */ { dag:8,  datum:'27 april', naam:'Mývatn',              lat:65.5887, lng:-16.9903, svgX:516, svgY:124, isLive:false },
   /* Dag 09 */ { dag:9,  datum:'28 april', naam:'Hvammstangi',         lat:65.3968, lng:-20.9394, svgX:273, svgY:177, isLive:false },
-  /* Dag 10 */ { dag:10, datum:'29 april', naam:'Ólafsvík',            lat:64.8960, lng:-23.7060, svgX:95,  svgY:271, isLive:true },
-  /* Dag 11 */ // { dag:11, datum:'30 april', naam:'Borgarnes',           lat:64.5609, lng:-21.9010, svgX:197, svgY:311, isLive:false },
+  /* Dag 10 */ { dag:10, datum:'29 april', naam:'Ólafsvík',            lat:64.8960, lng:-23.7060, svgX:95,  svgY:271, isLive:false },
+  /* Dag 11 */ { dag:11, datum:'30 april', naam:'Borgarnes',           lat:64.5609, lng:-21.9010, svgX:197, svgY:311, isLive:true },
   /* Dag 12 */ // { dag:12, datum:'1 mei',    naam:'Reykjavik',           lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
   /* Dag 13 */ // { dag:13, datum:'2 mei',    naam:'Terug naar huis',     lat:64.1355, lng:-21.8954, svgX:188, svgY:376, isLive:false },
 ];
@@ -777,7 +789,6 @@ const VISITED_PLACES = [
 const PLACEHOLDERS = [
 
 
-  { n:'11', datum:'30 April', titel:'Borgarnes' },
   { n:'12', datum:'1 Mei',    titel:'Reykjavik' },
   { n:'13', datum:'2 Mei',    titel:'Terug naar huis' },
 ];
