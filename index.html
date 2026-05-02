@@ -493,7 +493,7 @@
   <div class="hero-content">
     <p class="hero-eyebrow">April · Mei · 2026</p>
     <h1 class="hero-title">Een reis door ongerepte <em>vulkanische</em> landschappen</h1>
-    <p class="hero-sub">Twaalf dagen door geisers, gletsjers en donkere lavawoestijnen. Bedankt voor het volgen van onze reis.</p>
+    <p class="hero-sub">Twaalf dagen door geisers, gletsjers en donkere lavawoestijnen. </p>
     <a href="#dagen" class="hero-cta">
       Bekijk de dagboeken <span class="hero-cta-arrow">→</span>
     </a>
@@ -811,8 +811,8 @@ const PLACEHOLDERS = []
 function tick() {
   const now = new Date(), diff = DEPARTURE - now;
   if (now > RETURN) {
-    document.getElementById('cd-label').textContent = 'De reis zit erop!';
-    document.getElementById('cd-grid').innerHTML = '<p class="status-message">Wat een avontuur was dit.</p>';
+    document.getElementById('cd-label').textContent = 'We zijn weer thuis!';
+    document.getElementById('cd-grid').innerHTML = '<p class="status-message">Bedankt voor het volgen van onze reis.</p>';
     return;
   }
   if (now >= DEPARTURE) {
